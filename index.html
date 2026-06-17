@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ЧМ-2026 — Трекер</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f5;--surface:#fff;--surface2:#f8f9fa;
+  --text:#1a1a2e;--text2:#6b7280;--text3:#9ca3af;--border:#e5e7eb;
+  --primary:#0d6b3a;--primary-bg:#ecfdf5;
+  --live:#dc2626;--live-bg:#fef2f2;
+  --ft:#16a34a;--ft-bg:#f0fdf4;
+  --up:#2563eb;--up-bg:#eff6ff;
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07);
+  --r:12px;--rs:8px;
+}
+[data-theme="dark"]{
+  --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;
+  --text:#e9eaf0;--text2:#9ba3b4;--text3:#6b7280;--border:#2d3148;
+  --primary:#22c55e;--primary-bg:#052e16;
+  --live-bg:#3b0a0a;--ft-bg:#052e16;--up-bg:#0a1628;
+  --shadow:0 1px 3px rgba(0,0,0,.4);--shadow-md:0 4px 6px rgba(0,0,0,.3);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;
+  -webkit-font-smoothing:antialiased}
+header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.hdr{max-width:900px;margin:0 auto;padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px}
+.htitle{display:flex;align-items:center;gap:10px;min-width:0}
+.htitle h1{font-size:19px;font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.htitle .sub{font-size:11px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hacts{display:flex;gap:5px;flex-shrink:0}
+.ibtn{background:rgba(255,255,255,.15);border:none;border-radius:7px;color:#fff;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:15px;transition:background .15s;flex-shrink:0}
+.ibtn:hover{background:rgba(255,255,255,.28)}
+.ibtn:active{background:rgba(255,255,255,.38)}
+/* status icon tooltip */
+.status-tip{position:relative;display:flex}
+.status-tip .stip{position:absolute;right:0;top:calc(100% + 6px);
+  background:rgba(0,0,0,.82);color:#fff;font-size:11px;padding:5px 9px;
+  border-radius:7px;white-space:nowrap;pointer-events:none;opacity:0;
+  transition:opacity .15s;z-index:200;min-width:160px;text-align:center;line-height:1.4}
+.status-tip:hover .stip{opacity:1}
+.wrap{max-width:900px;margin:0 auto;padding:0 12px 80px}
+.today-block{background:var(--surface);border-radius:var(--r);padding:12px 14px;
+  margin:12px 0 8px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.today-block h2{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:8px}
+.tchips{display:flex;gap:6px;flex-wrap:wrap}
+.tchip{display:flex;align-items:center;gap:5px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;
+  cursor:pointer;transition:all .15s;color:var(--text2)}
+.tchip:hover{border-color:var(--primary);color:var(--primary)}
+.tchip.is-live{border-color:var(--live);background:var(--live-bg);color:var(--live)}
+/* ── TODAY TWO-COL ── */
+.today-wrap{display:flex;gap:10px;margin:12px 0 8px;align-items:stretch}
+.today-block{background:var(--surface);border-radius:var(--r);padding:12px 14px;
+  box-shadow:var(--shadow);border:1px solid var(--border)}
+.today-left{flex:1;min-width:0}
+.today-right{flex:1;min-width:0;display:flex;flex-direction:column}
+@media(max-width:640px){.today-wrap{flex-direction:column}}
+.today-block h2{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:8px}
+.fans-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fans-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
+.fans-table th{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;
+  letter-spacing:.4px;padding:4px 8px;border-bottom:1px solid var(--border);text-align:left}
+.fans-table td{padding:5px 8px;border-bottom:1px solid var(--border)}
+.fans-table tr:last-child td{border-bottom:none}
+.fans-table tr:hover td{background:var(--surface2)}
+/* today match rows */
+.tmrows{display:flex;flex-direction:column;gap:5px}
+.tmrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:9px;cursor:pointer;transition:background .12s;
+  border:1px solid var(--border)}
+.tmrow:hover{background:var(--surface2)}
+.tmrow.is-live{border-color:var(--live);background:var(--live-bg)}
+.tmrow.is-live:hover{background:var(--live-bg)}
+/* home: name right-aligned, flag closest to center */
+.tm-side{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--text);justify-content:flex-end;overflow:hidden}
+/* away: flag closest to center, name left */
+.tm-side.away{justify-content:flex-start}
+.tm-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tm-flag{width:26px;height:17px;border-radius:2px;object-fit:cover;
+  border:1px solid var(--border);flex-shrink:0}
+.tm-flag-e{font-size:16px;line-height:1;flex-shrink:0}
+.tm-mid{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;min-width:56px}
+.tm-score{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.3px;white-space:nowrap}
+.tm-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;text-transform:uppercase;letter-spacing:.3px}
+.tm-badge.live{background:var(--live-bg);color:var(--live)}
+.tm-badge.ft{background:var(--ft-bg);color:var(--ft)}
+.tm-badge.up{background:var(--up-bg);color:var(--up);font-size:10px}
+/* ─────────────────── */
+.srchwrap{margin:6px 0}
+.srchwrap input{width:100%;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--rs);padding:9px 13px;font-size:14px;color:var(--text);
+  outline:none;box-shadow:var(--shadow);transition:border-color .15s}
+.srchwrap input::placeholder{color:var(--text3)}
+.srchwrap input:focus{border-color:var(--primary)}
+.tabs{display:flex;background:var(--surface);border-radius:var(--rs);padding:4px;
+  margin:6px 0;box-shadow:var(--shadow);gap:4px}
+.tbtn{flex:1;background:transparent;border:none;border-radius:6px;padding:8px;
+  font-size:14px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s}
+.tbtn.active{background:var(--primary);color:#fff;font-weight:600}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.frow{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap;align-items:center}
+.fbtn{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:5px 13px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;
+  box-shadow:var(--shadow)}
+.fbtn.active,.fbtn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.gsel{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:5px 30px 5px 13px;font-size:12px;color:var(--text2);cursor:pointer;
+  outline:none;box-shadow:var(--shadow);appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center;margin-left:auto}
+.slabel{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;
+  letter-spacing:.6px;padding:10px 4px 4px}
+.mlist{display:flex;flex-direction:column;gap:7px}
+.mcard{background:var(--surface);border-radius:var(--r);padding:12px 38px 12px 14px;
+  box-shadow:var(--shadow);border:1px solid var(--border);position:relative;
+  transition:box-shadow .15s,transform .1s}
+.mcard:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.mcard.live-card{border-left:3px solid var(--live)}
+.mmeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.mgroup{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;
+  text-transform:uppercase;letter-spacing:.4px}
+.badge-live{background:var(--live-bg);color:var(--live);animation:pulse 1.4s ease-in-out infinite}
+.badge-ft{background:var(--ft-bg);color:var(--ft)}
+.badge-up{background:var(--up-bg);color:var(--up)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.mteams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}
+.team{display:flex;align-items:center;gap:9px}
+.team.away{justify-content:flex-end;flex-direction:row-reverse;text-align:right}
+.team-flag{width:39px;height:26px;border-radius:3px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+.team-emoji{font-size:26px;line-height:1;flex-shrink:0}
+.tname{font-size:18px;font-weight:600;color:var(--text);line-height:1.2}
+.tname.winner{color:var(--primary)}
+@media(max-width:380px){.tname{font-size:12px}.team-flag{width:24px;height:16px}}
+.sblock{display:flex;flex-direction:column;align-items:center;gap:1px}
+.score{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.5px;white-space:nowrap}
+.score-dash{font-size:20px;font-weight:300;color:var(--text3)}
+.mtime{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:7px;flex-wrap:wrap}
+.msk-time{font-size:12px;font-weight:600;color:var(--text2)}
+.loc-time{font-size:11px;color:var(--text3)}
+.venue{font-size:10px;color:var(--text3);text-align:center;margin-top:3px}
+.favbtn{background:none;border:none;font-size:15px;cursor:pointer;padding:0;
+  opacity:.3;transition:opacity .15s,transform .1s;position:absolute;top:10px;right:10px}
+.favbtn.on{opacity:1}
+.favbtn:hover{opacity:.8;transform:scale(1.2)}
+.empty{text-align:center;padding:44px 20px;color:var(--text3)}
+.empty .ic{font-size:48px;margin-bottom:10px}
+.gsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-top:6px}
+@media(max-width:600px){.gsgrid{grid-template-columns:1fr}}
+.gcard{background:var(--surface);border-radius:var(--r);overflow:hidden;
+  box-shadow:var(--shadow);border:1px solid var(--border)}
+.ghead{background:var(--primary);color:#fff;padding:9px 13px;font-size:12px;
+  font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.gtable{width:100%;border-collapse:collapse}
+.gtable th{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;
+  padding:5px 6px;text-align:center;border-bottom:1px solid var(--border)}
+.gtable th:first-child{text-align:left;padding-left:13px}
+.gtable td{padding:7px 6px;font-size:12px;text-align:center;border-bottom:1px solid var(--border)}
+.gtable td:first-child{text-align:left;padding-left:13px;font-weight:500}
+.gtable tr:last-child td{border-bottom:none}
+.tcell{display:flex;align-items:center;gap:6px}
+.fsm{width:20px;height:13px;border-radius:2px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+.fsm-e{font-size:13px;flex-shrink:0}
+.pts-col{font-weight:700;color:var(--text)}
+.gtable tr.p1{background:rgba(22,163,74,.1)}
+.gtable tr.p2{background:rgba(22,163,74,.05)}
+.gtable tr.p3 td:first-child{border-left:3px solid #f59e0b}
+[data-theme="dark"] .gtable tr.p1{background:rgba(34,197,94,.13)}
+[data-theme="dark"] .gtable tr.p2{background:rgba(34,197,94,.07)}
+.pbadge{display:inline-flex;align-items:center;justify-content:center;
+  width:17px;height:17px;border-radius:50%;font-size:10px;font-weight:700;margin-right:4px}
+.pbadge.b1{background:#16a34a;color:#fff}
+.pbadge.b2{background:#4ade80;color:#fff}
+.pbadge.b3{background:#fde68a;color:#92400e}
+.toast{position:fixed;bottom:20px;left:50%;
+  transform:translateX(-50%) translateY(70px);
+  background:var(--text);color:var(--bg);padding:9px 18px;border-radius:20px;
+  font-size:13px;font-weight:500;z-index:1000;transition:transform .3s ease;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@keyframes spinbtn{to{transform:rotate(360deg)}}
+.spinning{animation:spinbtn .6s linear}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="htitle">
+      <span style="font-size:22px">🏆</span>
+      <div>
+        <h1>ЧМ-2026</h1>
+        <div class="sub" id="last-update">Загрузка…</div>
+      </div>
+    </div>
+    <div class="hacts">
+      <div class="status-tip">
+        <button class="ibtn" id="status-btn" title="">●</button>
+        <div class="stip" id="status-tip-text">Загрузка…</div>
+      </div>
+      <button class="ibtn" id="refresh-btn" title="Обновить">↻</button>
+      <button class="ibtn" id="theme-btn" title="Тёмная тема">🌙</button>
+      <button class="ibtn" id="share-btn" title="Поделиться">⤴</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="today-block"></div>
+  <div class="srchwrap">
+    <input type="text" id="search" placeholder="🔍 Поиск по команде…" autocomplete="off">
+  </div>
+  <div class="tabs">
+    <button class="tbtn active" data-tab="matches">⚽ Матчи</button>
+    <button class="tbtn" data-tab="finished">✅ Завершённые</button>
+    <button class="tbtn" data-tab="groups">📊 Группы</button>
+  </div>
+  <div id="tab-matches" class="tab-content active">
+    <div class="frow">
+      <button class="fbtn active" data-filter="all">Все</button>
+      <button class="fbtn" data-filter="today">Сегодня</button>
+      <select class="gsel" id="group-filter">
+        <option value="">Все группы</option>
+      </select>
+    </div>
+    <div id="matches-container"></div>
+  </div>
+  <div id="tab-finished" class="tab-content">
+    <div class="frow">
+      <select class="gsel" id="fin-group-filter" style="margin-left:0">
+        <option value="">Все группы</option>
+      </select>
+    </div>
+    <div id="finished-container"></div>
+  </div>
+  <div id="tab-groups" class="tab-content">
+    <div id="groups-container" class="gsgrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// КОНФИГУРАЦИЯ
+// Для реальных данных получите БЕСПЛАТНЫЙ токен на:
+//   https://www.football-data.org/  → Dashboard → Token
+// Вставьте токен ниже. Пока токен пустой — используются
+// встроенные данные расписания ЧМ-2026 (без ошибки API).
+// ═══════════════════════════════════════════════════════════════
+const CFG = {
+  API_TOKEN: '6525e6973e2a48bdb8e0466af702846d',
+  API_URL:   'https://api.football-data.org/v4/competitions/WC/matches',
+  REFRESH_MS: 60_000,
+  CACHE_KEY:  'wc2026_v2',
+  CACHE_TTL:  600_000, // 10 минут
+};
+
+// ═══════════════════════════════════════════════════════════════
+// ФЛАГИ: название команды → ISO 3166-1 alpha-2
+// CDN: https://flagcdn.com/w40/{код}.png
+// ═══════════════════════════════════════════════════════════════
+const FLAGS = {
+  // CONMEBOL
+  'Аргентина':'ar','Бразилия':'br','Уругвай':'uy','Колумбия':'co',
+  'Чили':'cl','Эквадор':'ec','Парагвай':'py','Венесуэла':'ve',
+  'Перу':'pe','Боливия':'bo',
+  // CONCACAF
+  'США':'us','Мексика':'mx','Канада':'ca','Ямайка':'jm',
+  'Гондурас':'hn','Панама':'pa','Коста-Рика':'cr','Сальвадор':'sv',
+  'Гватемала':'gt','Гаити':'ht','Тринидад и Тобаго':'tt',
+  'Кюрасао':'cw',
+  // UEFA
+  'Франция':'fr','Испания':'es','Германия':'de','Нидерланды':'nl',
+  'Португалия':'pt','Бельгия':'be','Хорватия':'hr','Дания':'dk',
+  'Сербия':'rs','Польша':'pl','Швейцария':'ch','Австрия':'at',
+  'Турция':'tr','Украина':'ua','Румыния':'ro','Венгрия':'hu',
+  'Англия':'gb-eng','Шотландия':'gb-sct','Уэльс':'gb-wls',
+  'Чехия':'cz','Словакия':'sk','Швеция':'se','Норвегия':'no',
+  'Греция':'gr','Словения':'si','Финляндия':'fi','Исландия':'is',
+  'Италия':'it','Ирландия':'ie','Косово':'xk','Грузия':'ge',
+  'Босния':'ba','Черногория':'me','Албания':'al',
+  'Северная Македония':'mk',
+  // AFC
+  'Япония':'jp','Южная Корея':'kr','Австралия':'au','Иран':'ir',
+  'Саудовская Аравия':'sa','Катар':'qa','Ирак':'iq','ОАЭ':'ae',
+  'Узбекистан':'uz','Китай':'cn','Индонезия':'id','Иордания':'jo',
+  'Бахрейн':'bh','Оман':'om',
+  // CAF
+  'Марокко':'ma','Египет':'eg','Сенегал':'sn','Нигерия':'ng',
+  'Камерун':'cm','Гана':'gh','Тунис':'tn','Алжир':'dz',
+  'Мали':'ml','Кот-д\'Ивуар':'ci','Конго':'cg','ДР Конго':'cd',
+  'Гвинея':'gn','ЮАР':'za','Замбия':'zm','Кения':'ke','Ангола':'ao',
+  'Кабо-Верде':'cv',
+  // OFC
+  'Новая Зеландия':'nz',
+};
+
+function isoToEmoji(c){
+  if(!c)return'🏳️';
+  const b=c.split('-')[0];
+  return[...b.toUpperCase()].map(x=>String.fromCodePoint(127397+x.charCodeAt(0))).join('');
+}
+function flagUrl(t){const c=FLAGS[t];return c?`https://flagcdn.com/w40/${c}.png`:null}
+function flagEmoji(t){return isoToEmoji(FLAGS[t]||'')}
+function flagImg(t,sm=false){
+  const url=flagUrl(t),em=flagEmoji(t);
+  const ic=sm?'fsm':'team-flag',ec=sm?'fsm-e':'team-emoji';
+  if(url)return`<img class="${ic}" src="${url}" alt="${t}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="${ec}" style="display:none">${em}</span>`;
+  return`<span class="${ec}">${em}</span>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ГРУППЫ ЧМ-2026 (официальное расписание, время МСК)
+// Источник: официальное расписание FIFA
+// ═══════════════════════════════════════════════════════════════
+// Группы соответствуют реальным данным API football-data.org (GROUP_A..GROUP_L)
+const FALLBACK_GROUPS = {
+  A:{name:'Группа A',teams:['Мексика','Южная Корея','Чехия','ЮАР']},
+  B:{name:'Группа B',teams:['Канада','Босния','Катар','Швейцария']},
+  C:{name:'Группа C',teams:['Бразилия','Марокко','Гаити','Шотландия']},
+  D:{name:'Группа D',teams:['США','Парагвай','Австралия','Турция']},
+  E:{name:'Группа E',teams:['Германия','Кюрасао','Кот-д\'Ивуар','Эквадор']},
+  F:{name:'Группа F',teams:['Нидерланды','Япония','Швеция','Тунис']},
+  G:{name:'Группа G',teams:['Бельгия','Египет','Иран','Новая Зеландия']},
+  H:{name:'Группа H',teams:['Испания','Кабо-Верде','Саудовская Аравия','Уругвай']},
+  I:{name:'Группа I',teams:['Франция','Сенегал','Ирак','Норвегия']},
+  J:{name:'Группа J',teams:['Аргентина','Алжир','Австрия','Иордания']},
+  K:{name:'Группа K',teams:['Колумбия','Португалия','Конго','Узбекистан']},
+  L:{name:'Группа L',teams:['Англия','Хорватия','Гана','Панама']},
+};
+
+// ═══════════════════════════════════════════════════════════════
+// РАСПИСАНИЕ ЧМ-2026 — ПОЛНЫЙ ГРУППОВОЙ ЭТАП
+// Время UTC = MSK − 3 часа
+// Статусы: FT (сыгран), LIVE (идёт), UPCOMING (предстоит)
+// ═══════════════════════════════════════════════════════════════
+// Реальные результаты из API football-data.org, группы по API (GROUP_A..L)
+const FALLBACK_MATCHES = [
+  // ── 1 ТУР ──────────────────────────────────────────────────
+  {id:537327,group:'A',home:'Мексика',         away:'ЮАР',              date:'2026-06-11T19:00:00Z',hs:2, as:0, status:'FT',      venue:'SoFi Stadium, Лос-Анджелес'},
+  {id:537328,group:'A',home:'Южная Корея',     away:'Чехия',            date:'2026-06-12T02:00:00Z',hs:2, as:1, status:'FT',      venue:'AT&T Stadium, Даллас'},
+  {id:537329,group:'B',home:'Канада',           away:'Босния',           date:'2026-06-12T19:00:00Z',hs:1, as:1, status:'FT',      venue:'BC Place, Ванкувер'},
+  {id:537330,group:'D',home:'США',              away:'Парагвай',         date:'2026-06-13T01:00:00Z',hs:4, as:1, status:'FT',      venue:'MetLife Stadium, Нью-Йорк'},
+  {id:537331,group:'B',home:'Катар',            away:'Швейцария',        date:'2026-06-13T19:00:00Z',hs:1, as:1, status:'FT',      venue:'Estadio Akron, Гвадалахара'},
+  {id:537332,group:'C',home:'Бразилия',         away:'Марокко',          date:'2026-06-13T22:00:00Z',hs:1, as:1, status:'FT',      venue:'Rose Bowl, Пасадена'},
+  {id:537333,group:'C',home:'Гаити',            away:'Шотландия',        date:'2026-06-14T01:00:00Z',hs:0, as:1, status:'FT',      venue:'NRG Stadium, Хьюстон'},
+  {id:537334,group:'D',home:'Австралия',        away:'Турция',           date:'2026-06-14T04:00:00Z',hs:2, as:0, status:'FT',      venue:'Mercedes-Benz Stadium, Атланта'},
+  {id:537335,group:'E',home:'Германия',         away:'Кюрасао',          date:'2026-06-14T17:00:00Z',hs:7, as:1, status:'FT',      venue:'Lincoln Financial Field, Филадельфия'},
+  {id:537336,group:'F',home:'Нидерланды',       away:'Япония',           date:'2026-06-14T20:00:00Z',hs:2, as:2, status:'FT',      venue:'Hard Rock Stadium, Майами'},
+  {id:537337,group:'E',home:'Кот-д\'Ивуар',    away:'Эквадор',          date:'2026-06-14T23:00:00Z',hs:1, as:0, status:'FT',      venue:'Levi\'s Stadium, Санта-Клара'},
+  {id:537338,group:'F',home:'Швеция',           away:'Тунис',            date:'2026-06-15T02:00:00Z',hs:5, as:1, status:'FT',      venue:'Gillette Stadium, Бостон'},
+  {id:537339,group:'H',home:'Испания',          away:'Кабо-Верде',       date:'2026-06-15T16:00:00Z',hs:0, as:0, status:'FT',      venue:'Arrowhead Stadium, Канзас-Сити'},
+  {id:537340,group:'G',home:'Бельгия',          away:'Египет',           date:'2026-06-15T19:00:00Z',hs:1, as:1, status:'FT',      venue:'Allegiant Stadium, Лас-Вегас'},
+  {id:537341,group:'H',home:'Саудовская Аравия',away:'Уругвай',          date:'2026-06-15T22:00:00Z',hs:1, as:1, status:'FT',      venue:'Estadio Universitario, Монтеррей'},
+  {id:537342,group:'G',home:'Иран',             away:'Новая Зеландия',   date:'2026-06-16T01:00:00Z',hs:2, as:2, status:'FT',      venue:'Empower Field, Денвер'},
+  {id:537343,group:'I',home:'Франция',          away:'Сенегал',          date:'2026-06-16T19:00:00Z',hs:3, as:1, status:'FT',      venue:'SoFi Stadium, Лос-Анджелес'},
+  {id:537344,group:'I',home:'Ирак',             away:'Норвегия',         date:'2026-06-16T22:00:00Z',hs:1, as:4, status:'FT',      venue:'AT&T Stadium, Даллас'},
+  {id:537345,group:'J',home:'Аргентина',        away:'Алжир',            date:'2026-06-17T01:00:00Z',hs:3, as:0, status:'FT',      venue:'MetLife Stadium, Нью-Йорк'},
+  {id:537346,group:'J',home:'Австрия',          away:'Иордания',         date:'2026-06-17T04:00:00Z',hs:3, as:1, status:'FT',      venue:'BC Place, Ванкувер'},
+  {id:537347,group:'K',home:'Португалия',       away:'Конго',            date:'2026-06-17T17:00:00Z',hs:1, as:1, status:'FT',      venue:'NRG Stadium, Хьюстон'},
+  {id:537348,group:'L',home:'Англия',           away:'Хорватия',         date:'2026-06-17T20:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Levi\'s Stadium, Санта-Клара'},
+  {id:537349,group:'L',home:'Гана',             away:'Панама',           date:'2026-06-17T23:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Hard Rock Stadium, Майами'},
+  {id:537350,group:'K',home:'Узбекистан',       away:'Колумбия',         date:'2026-06-18T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Rose Bowl, Пасадена'},
+
+  // ── 2 ТУР ──────────────────────────────────────────────────
+  {id:537351,group:'A',home:'Чехия',            away:'ЮАР',              date:'2026-06-18T16:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Arrowhead Stadium, Канзас-Сити'},
+  {id:537352,group:'B',home:'Швейцария',        away:'Босния',           date:'2026-06-18T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Azteca, Мехико'},
+  {id:537353,group:'B',home:'Канада',           away:'Катар',            date:'2026-06-18T22:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Allegiant Stadium, Лас-Вегас'},
+  {id:537354,group:'A',home:'Мексика',          away:'Южная Корея',      date:'2026-06-19T01:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Gillette Stadium, Бостон'},
+  {id:537355,group:'D',home:'США',              away:'Австралия',        date:'2026-06-19T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Lincoln Financial Field, Филадельфия'},
+  {id:537356,group:'C',home:'Шотландия',        away:'Марокко',          date:'2026-06-19T22:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Mercedes-Benz Stadium, Атланта'},
+  {id:537357,group:'C',home:'Бразилия',         away:'Гаити',            date:'2026-06-20T00:30:00Z',hs:null,as:null,status:'UPCOMING',venue:'Empower Field, Денвер'},
+  {id:537358,group:'D',home:'Турция',           away:'Парагвай',         date:'2026-06-20T03:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'BC Place, Ванкувер'},
+  {id:537359,group:'F',home:'Нидерланды',       away:'Швеция',           date:'2026-06-20T17:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'SoFi Stadium, Лос-Анджелес'},
+  {id:537360,group:'E',home:'Германия',         away:'Кот-д\'Ивуар',     date:'2026-06-20T20:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'AT&T Stadium, Даллас'},
+  {id:537361,group:'E',home:'Эквадор',          away:'Кюрасао',          date:'2026-06-21T00:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'NRG Stadium, Хьюстон'},
+  {id:537362,group:'F',home:'Тунис',            away:'Япония',           date:'2026-06-21T04:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Hard Rock Stadium, Майами'},
+  {id:537363,group:'H',home:'Испания',          away:'Саудовская Аравия',date:'2026-06-21T16:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Rose Bowl, Пасадена'},
+  {id:537364,group:'G',home:'Бельгия',          away:'Иран',             date:'2026-06-21T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'MetLife Stadium, Нью-Йорк'},
+  {id:537365,group:'H',home:'Уругвай',          away:'Кабо-Верде',       date:'2026-06-21T22:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Levi\'s Stadium, Санта-Клара'},
+  {id:537366,group:'G',home:'Новая Зеландия',   away:'Египет',           date:'2026-06-22T01:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Universitario, Монтеррей'},
+  {id:537367,group:'J',home:'Аргентина',        away:'Австрия',          date:'2026-06-22T17:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Akron, Гвадалахара'},
+  {id:537368,group:'I',home:'Франция',          away:'Ирак',             date:'2026-06-22T21:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Arrowhead Stadium, Канзас-Сити'},
+  {id:537369,group:'I',home:'Норвегия',         away:'Сенегал',          date:'2026-06-23T00:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Allegiant Stadium, Лас-Вегас'},
+  {id:537370,group:'J',home:'Иордания',         away:'Алжир',            date:'2026-06-23T03:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'BC Place, Ванкувер'},
+  {id:537371,group:'K',home:'Португалия',       away:'Узбекистан',       date:'2026-06-23T17:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Mercedes-Benz Stadium, Атланта'},
+  {id:537372,group:'L',home:'Англия',           away:'Гана',             date:'2026-06-23T20:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Gillette Stadium, Бостон'},
+  {id:537373,group:'L',home:'Панама',           away:'Хорватия',         date:'2026-06-23T23:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Lincoln Financial Field, Филадельфия'},
+  {id:537374,group:'K',home:'Колумбия',         away:'Конго',            date:'2026-06-24T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Empower Field, Денвер'},
+
+  // ── 3 ТУР (одновременно в каждой группе) ──────────────────
+  {id:537375,group:'B',home:'Швейцария',        away:'Канада',           date:'2026-06-24T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Azteca, Мехико'},
+  {id:537376,group:'B',home:'Босния',           away:'Катар',            date:'2026-06-24T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'SoFi Stadium, Лос-Анджелес'},
+  {id:537377,group:'C',home:'Шотландия',        away:'Бразилия',         date:'2026-06-24T22:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'AT&T Stadium, Даллас'},
+  {id:537378,group:'C',home:'Марокко',          away:'Гаити',            date:'2026-06-24T22:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'MetLife Stadium, Нью-Йорк'},
+  {id:537379,group:'A',home:'Чехия',            away:'Мексика',          date:'2026-06-25T01:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'NRG Stadium, Хьюстон'},
+  {id:537380,group:'A',home:'ЮАР',              away:'Южная Корея',      date:'2026-06-25T01:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Hard Rock Stadium, Майами'},
+  {id:537381,group:'E',home:'Кюрасао',          away:'Кот-д\'Ивуар',     date:'2026-06-25T20:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Rose Bowl, Пасадена'},
+  {id:537382,group:'E',home:'Эквадор',          away:'Германия',         date:'2026-06-25T20:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Levi\'s Stadium, Санта-Клара'},
+  {id:537383,group:'F',home:'Япония',           away:'Швеция',           date:'2026-06-25T23:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Gillette Stadium, Бостон'},
+  {id:537384,group:'F',home:'Тунис',            away:'Нидерланды',       date:'2026-06-25T23:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Lincoln Financial Field, Филадельфия'},
+  {id:537385,group:'D',home:'Турция',           away:'США',              date:'2026-06-26T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Mercedes-Benz Stadium, Атланта'},
+  {id:537386,group:'D',home:'Парагвай',         away:'Австралия',        date:'2026-06-26T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'BC Place, Ванкувер'},
+  {id:537387,group:'I',home:'Норвегия',         away:'Франция',          date:'2026-06-26T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Arrowhead Stadium, Канзас-Сити'},
+  {id:537388,group:'I',home:'Сенегал',          away:'Ирак',             date:'2026-06-26T19:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Allegiant Stadium, Лас-Вегас'},
+  {id:537389,group:'H',home:'Кабо-Верде',       away:'Саудовская Аравия',date:'2026-06-27T00:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Akron, Гвадалахара'},
+  {id:537390,group:'H',home:'Уругвай',          away:'Испания',          date:'2026-06-27T00:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Estadio Universitario, Монтеррей'},
+  {id:537391,group:'G',home:'Египет',           away:'Иран',             date:'2026-06-27T03:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Empower Field, Денвер'},
+  {id:537392,group:'G',home:'Новая Зеландия',   away:'Бельгия',          date:'2026-06-27T03:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'SoFi Stadium, Лос-Анджелес'},
+  {id:537393,group:'L',home:'Панама',           away:'Англия',           date:'2026-06-27T21:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'AT&T Stadium, Даллас'},
+  {id:537394,group:'L',home:'Хорватия',         away:'Гана',             date:'2026-06-27T21:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'MetLife Stadium, Нью-Йорк'},
+  {id:537395,group:'K',home:'Колумбия',         away:'Португалия',       date:'2026-06-27T23:30:00Z',hs:null,as:null,status:'UPCOMING',venue:'NRG Stadium, Хьюстон'},
+  {id:537396,group:'K',home:'Конго',            away:'Узбекистан',       date:'2026-06-27T23:30:00Z',hs:null,as:null,status:'UPCOMING',venue:'Hard Rock Stadium, Майами'},
+  {id:537397,group:'J',home:'Алжир',            away:'Австрия',          date:'2026-06-28T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Rose Bowl, Пасадена'},
+  {id:537398,group:'J',home:'Иордания',         away:'Аргентина',        date:'2026-06-28T02:00:00Z',hs:null,as:null,status:'UPCOMING',venue:'Levi\'s Stadium, Санта-Клара'},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// УТИЛИТЫ
+// ═══════════════════════════════════════════════════════════════
+const MSK_TZ = 'Europe/Moscow';
+
+function fmtMSK(d,opts){return new Date(d).toLocaleString('ru-RU',{timeZone:MSK_TZ,...opts});}
+function fmtTime(d){return fmtMSK(d,{hour:'2-digit',minute:'2-digit'});}
+function fmtDate(d){return fmtMSK(d,{day:'numeric',month:'short'});}
+function fmtDateFull(d){return fmtMSK(d,{day:'numeric',month:'long',weekday:'short'});}
+function fmtLocal(d){return new Date(d).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}
+function isLocalMSK(){return new Date().getTimezoneOffset()===-180;}
+function isToday(d){
+  const opts={timeZone:MSK_TZ,year:'numeric',month:'2-digit',day:'2-digit'};
+  return new Date(d).toLocaleDateString('ru-RU',opts)===new Date().toLocaleDateString('ru-RU',opts);
+}
+function timeAgo(ts){
+  const s=Math.floor((Date.now()-ts)/1000);
+  if(s<10)return'только что';
+  if(s<60)return`${s} сек. назад`;
+  if(s<3600)return`${Math.floor(s/60)} мин. назад`;
+  return`${Math.floor(s/3600)} ч. назад`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// СОСТОЯНИЕ
+// ═══════════════════════════════════════════════════════════════
+let S={
+  matches:[],groups:{},filter:'all',groupFilter:'',finGroupFilter:'',search:'',
+  lastUpdate:null,favorites:new Set(),
+};
+
+function saveCache(m){try{localStorage.setItem(CFG.CACHE_KEY,JSON.stringify({ts:Date.now(),m}));}catch(_){}}
+function loadCache(){
+  try{const r=localStorage.getItem(CFG.CACHE_KEY);if(!r)return null;
+      const{ts,m}=JSON.parse(r);if(Date.now()-ts<CFG.CACHE_TTL)return m;}catch(_){}return null;
+}
+function saveFavs(){try{localStorage.setItem('wc2026_favs',JSON.stringify([...S.favorites]));}catch(_){}}
+function loadFavs(){try{return new Set(JSON.parse(localStorage.getItem('wc2026_favs')||'[]'));}catch(_){return new Set();}}
+
+// ═══════════════════════════════════════════════════════════════
+// ЗАГРУЗКА ДАННЫХ
+// ═══════════════════════════════════════════════════════════════
+// Перевод английских названий команд (API) → русские (для флагов и таблиц)
+// Если API изменит название — добавьте новый вариант сюда
+const TEAM_EN_TO_RU = {
+  'Mexico':'Мексика','South Africa':'ЮАР','South Korea':'Южная Корея',
+  'Korea Republic':'Южная Корея','Czechia':'Чехия','Czech Republic':'Чехия',
+  'Canada':'Канада','Bosnia-Herzegovina':'Босния','Bosnia and Herzegovina':'Босния',
+  'Qatar':'Катар','Switzerland':'Швейцария',
+  'United States':'США','USA':'США',
+  'Paraguay':'Парагвай','Australia':'Австралия','Turkey':'Турция','Türkiye':'Турция',
+  'Brazil':'Бразилия','Morocco':'Марокко','Haiti':'Гаити','Scotland':'Шотландия',
+  'Germany':'Германия','Curaçao':'Кюрасао','Curacao':'Кюрасао',
+  'Ivory Coast':'Кот-д\'Ивуар',"Côte d'Ivoire":'Кот-д\'Ивуар',
+  'Ecuador':'Эквадор','Netherlands':'Нидерланды','Japan':'Япония',
+  'Sweden':'Швеция','Tunisia':'Тунис','Belgium':'Бельгия','Egypt':'Египет',
+  'Iran':'Иран','New Zealand':'Новая Зеландия',
+  'Spain':'Испания','Cape Verde Islands':'Кабо-Верде','Cape Verde':'Кабо-Верде',
+  'Saudi Arabia':'Саудовская Аравия','Uruguay':'Уругвай',
+  'France':'Франция','Senegal':'Сенегал','Iraq':'Ирак','Norway':'Норвегия',
+  'Argentina':'Аргентина','Algeria':'Алжир','Austria':'Австрия','Jordan':'Иордания',
+  'Colombia':'Колумбия','Portugal':'Португалия',
+  'Congo DR':'Конго','DR Congo':'Конго','Republic of Congo':'Конго',
+  'England':'Англия','Croatia':'Хорватия','Ghana':'Гана','Panama':'Панама',
+};
+function toRu(name){ return TEAM_EN_TO_RU[name] || name; }
+
+async function fetchAPI(){
+  if(!CFG.API_TOKEN) throw new Error('no-token');
+  // AbortController вместо AbortSignal.timeout — совместимо со всеми браузерами
+  const ctrl=new AbortController();
+  const tid=setTimeout(()=>ctrl.abort(),8000);
+  let r;
+  try{
+    r=await fetch(CFG.API_URL,{headers:{'X-Auth-Token':CFG.API_TOKEN},signal:ctrl.signal});
+  }finally{clearTimeout(tid);}
+  if(!r.ok) throw new Error(`HTTP ${r.status}`);
+  const j=await r.json();
+  // Фильтруем только групповой этап — у плейофф команды ещё не назначены
+  return(j.matches||[])
+    .filter(m=>m.stage==='GROUP_STAGE' && m.homeTeam?.name)
+    .map(m=>({
+      id:m.id,
+      group:(m.group||'').replace('GROUP_',''),
+      home:toRu(m.homeTeam.name),
+      away:toRu(m.awayTeam.name),
+      date:m.utcDate,
+      hs:m.score?.fullTime?.home??null,
+      as:m.score?.fullTime?.away??null,
+      status:m.status==='FINISHED'?'FT':['IN_PLAY','PAUSED'].includes(m.status)?'LIVE':'UPCOMING',
+      venue:m.venue||'',
+    }));
+}
+
+function setStatus(icon,text){
+  const btn=document.getElementById('status-btn');
+  const tip=document.getElementById('status-tip-text');
+  if(btn) btn.textContent=icon;
+  if(tip) tip.textContent=text;
+}
+
+async function loadData(){
+  try{
+    const matches=await fetchAPI();
+    S.matches=matches;
+    saveCache(matches);
+    const live=matches.filter(m=>m.status==='LIVE').length;
+    setStatus('🟢', live?`Данные из API · ${live} матч${live===1?'':'а'} LIVE`:'Данные из API · обновлено только что');
+  }catch(e){
+    if(e.message==='no-token'){
+      const cached=loadCache();
+      S.matches=cached||FALLBACK_MATCHES;
+      setStatus('⚪','Токен не задан — встроенное расписание');
+    } else {
+      const cached=loadCache();
+      S.matches=cached||FALLBACK_MATCHES;
+      setStatus('🔴',`Ошибка API: ${e.message} — ${cached?'кешированные данные':'встроенное расписание'}`);
+    }
+  }
+  S.lastUpdate=Date.now();
+  S.groups=FALLBACK_GROUPS;
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ТАБЛИЦЫ ГРУПП
+// ═══════════════════════════════════════════════════════════════
+function computeStandings(){
+  const s={};
+  for(const[id,g]of Object.entries(S.groups)){
+    s[id]={name:g.name,teams:g.teams.map(t=>({name:t,mp:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0}))};
+  }
+  for(const m of S.matches){
+    if(m.status!=='FT'||m.hs===null)continue;
+    const g=s[m.group];if(!g)continue;
+    const H=g.teams.find(t=>t.name===m.home);
+    const A=g.teams.find(t=>t.name===m.away);
+    if(!H||!A)continue;
+    H.mp++;A.mp++;H.gf+=m.hs;H.ga+=m.as;A.gf+=m.as;A.ga+=m.hs;
+    H.gd=H.gf-H.ga;A.gd=A.gf-A.ga;
+    if(m.hs>m.as){H.w++;H.pts+=3;A.l++;}
+    else if(m.hs<m.as){A.w++;A.pts+=3;H.l++;}
+    else{H.d++;H.pts++;A.d++;A.pts++;}
+  }
+  for(const g of Object.values(s)){
+    g.teams.sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.name.localeCompare(b.name,'ru'));
+  }
+  return s;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// РЕНДЕР
+// ═══════════════════════════════════════════════════════════════
+function renderAll(){updateLastUpdate();renderTodayBlock();renderMatches();renderFinished();renderGroups();}
+
+function updateLastUpdate(){
+  const el=document.getElementById('last-update');
+  el.textContent=S.lastUpdate?'Обновлено '+timeAgo(S.lastUpdate):'Нет данных';
+}
+
+// ── Таблица болельщиков — редактируйте список ниже ──────────
+const FANS = [
+  {name:'Диса',    under:'Узбекистон',          uiso:'uz', fav:'Аргентина',           fiso:'ar'},
+  {name:'Валера',  under:'ЮСА',                 uiso:'us', fav:'Португалиш',          fiso:'pt'},
+  {name:'Василий', under:'А чо началось то 🤔', uiso:'',   fav:'Я чет пока не определился 😅', fiso:''},
+  {name:'Макс',    under:'Босния',              uiso:'ba', fav:'Красивый футбол ⚽',  fiso:''},
+  {name:'Антоха',  under:'Конго',               uiso:'cg', fav:'Испания (Франция)',   fiso:'es'},
+  {name:'Рамала',  under:'Узбекистан',          uiso:'uz', fav:'Америка',             fiso:'us'},
+  {name:'Стас',    under:'Марокко',             uiso:'ma', fav:'Италия (Бразилия)',   fiso:'it'},
+];
+
+function renderTodayBlock(){
+  const el=document.getElementById('today-block');
+  const tm=S.matches.filter(m=>isToday(m.date));
+  const live=tm.filter(m=>m.status==='LIVE');
+
+  const rows=tm.length
+    ? tm.map(m=>{
+        const isLive=m.status==='LIVE';const isFT=m.status==='FT';
+        const badge=isLive
+          ?`<span class="tm-badge live">● LIVE</span>`
+          :isFT
+          ?`<span class="tm-badge ft">FT</span>`
+          :`<span class="tm-badge up">${fmtTime(m.date)}</span>`;
+        const mid=m.hs!==null
+          ?`<div class="tm-score">${m.hs} : ${m.as}</div>${badge}`
+          :`<div class="tm-score" style="font-size:11px;color:var(--text3)">${fmtTime(m.date)}</div>${badge}`;
+        const fH=flagUrl(m.home),fA=flagUrl(m.away);
+        const imgH=fH?`<img class="tm-flag" src="${fH}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<span class="tm-flag-e">${flagEmoji(m.home)}</span>`;
+        const imgA=fA?`<img class="tm-flag" src="${fA}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<span class="tm-flag-e">${flagEmoji(m.away)}</span>`;
+        return`<div class="tmrow${isLive?' is-live':''}" onclick="scrollToMatch(${m.id})">
+          <div class="tm-side"><span class="tm-name">${m.home}</span>${imgH}</div>
+          <div class="tm-mid">${mid}</div>
+          <div class="tm-side away">${imgA}<span class="tm-name">${m.away}</span></div>
+        </div>`;
+      }).join('')
+    : `<span style="color:var(--text3);font-size:12px">Сегодня матчей нет</span>`;
+
+  const fanFlag=iso=>iso?`<img src="https://flagcdn.com/w40/${iso}.png" style="width:18px;height:12px;border-radius:2px;object-fit:cover;border:1px solid var(--border);vertical-align:middle;margin-right:4px" loading="lazy">`:'';
+  const fansRows=FANS.map(f=>`
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">${f.name}</td>
+      <td style="color:var(--up)">${fanFlag(f.uiso)}${f.under}</td>
+      <td style="color:var(--ft)">${fanFlag(f.fiso)}${f.fav}</td>
+    </tr>`).join('');
+
+  el.innerHTML=`<div class="today-wrap">
+    <div class="today-block today-left">
+      <h2>📅 Сегодня играют${live.length?` · <span style="color:var(--live)">● ${live.length} LIVE</span>`:''}:</h2>
+      <div class="tmrows">${rows}</div>
+    </div>
+    <div class="today-block today-right">
+      <h2>💬 Кто за кого</h2>
+      <div class="fans-scroll">
+        <table class="fans-table">
+          <thead><tr>
+            <th>Имя</th><th>Андердог 💙</th><th>Фаворит ❤️</th>
+          </tr></thead>
+          <tbody>${fansRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+function getFiltered(){
+  // Only LIVE + UPCOMING for matches tab
+  let ms=S.matches.filter(m=>m.status!=='FT');
+  if(S.filter==='today') ms=ms.filter(m=>isToday(m.date));
+  if(S.groupFilter)      ms=ms.filter(m=>m.group===S.groupFilter);
+  const q=S.search.trim().toLowerCase();
+  if(q) ms=ms.filter(m=>m.home.toLowerCase().includes(q)||m.away.toLowerCase().includes(q));
+  return ms;
+}
+
+function renderMatches(){
+  const con=document.getElementById('matches-container');
+  const ms=getFiltered();
+  if(!ms.length){con.innerHTML=`<div class="empty"><div class="ic">⚽</div><p>Матчей не найдено</p></div>`;return;}
+
+  const live=ms.filter(m=>m.status==='LIVE');
+  const upcoming=ms.filter(m=>m.status==='UPCOMING').sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+  let h='';
+  if(live.length){
+    h+=`<div class="slabel">🔴 Идут сейчас</div><div class="mlist">${live.map(mc).join('')}</div>`;
+  }
+  if(upcoming.length){
+    const byDay={};
+    for(const m of upcoming){const k=fmtDateFull(m.date);(byDay[k]??=[]).push(m);}
+    for(const[day,dm]of Object.entries(byDay)){
+      h+=`<div class="slabel">📅 ${day}</div><div class="mlist">${dm.map(mc).join('')}</div>`;
+    }
+  }
+  con.innerHTML=h;
+}
+
+function renderFinished(){
+  const con=document.getElementById('finished-container');
+  const grp=S.finGroupFilter||'';
+  const q=S.search.trim().toLowerCase();
+  let ms=S.matches.filter(m=>m.status==='FT');
+  if(grp) ms=ms.filter(m=>m.group===grp);
+  if(q)   ms=ms.filter(m=>m.home.toLowerCase().includes(q)||m.away.toLowerCase().includes(q));
+  ms.sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  if(!ms.length){con.innerHTML=`<div class="empty"><div class="ic">✅</div><p>Нет завершённых матчей</p></div>`;return;}
+
+  const byDay={};
+  for(const m of ms){const k=fmtDateFull(m.date);(byDay[k]??=[]).push(m);}
+  let h='';
+  for(const[day,dm]of Object.entries(byDay)){
+    h+=`<div class="slabel">📅 ${day}</div><div class="mlist">${dm.map(mc).join('')}</div>`;
+  }
+  con.innerHTML=h;
+}
+
+function mc(m){
+  const fav=S.favorites.has(m.id);
+  const badge=m.status==='LIVE'
+    ?`<span class="badge badge-live">● LIVE</span>`
+    :m.status==='FT'
+    ?`<span class="badge badge-ft">FT</span>`
+    :`<span class="badge badge-up">📅 ${fmtDate(m.date)}</span>`;
+  const scoreBlock=m.hs!==null
+    ?`<div class="score">${m.hs} : ${m.as}</div>`
+    :`<div class="score-dash">–</div>`;
+  const wH=m.status==='FT'&&m.hs>m.as?'winner':'';
+  const wA=m.status==='FT'&&m.as>m.hs?'winner':'';
+  const loc=!isLocalMSK()?`<span class="loc-time">(${fmtLocal(m.date)} ваш)</span>`:'';
+  return`<div class="mcard${m.status==='LIVE'?' live-card':''}" id="match-${m.id}">
+    <div class="mmeta"><span class="mgroup">Группа ${m.group}</span>${badge}</div>
+    <div class="mteams">
+      <div class="team">${flagImg(m.home)}<span class="tname ${wH}">${m.home}</span></div>
+      <div class="sblock">${scoreBlock}</div>
+      <div class="team away">${flagImg(m.away)}<span class="tname ${wA}">${m.away}</span></div>
+    </div>
+    <div class="mtime"><span class="msk-time">${fmtTime(m.date)} МСК</span>${loc}</div>
+    ${m.venue?`<div class="venue">📍 ${m.venue}</div>`:''}
+    <button class="favbtn${fav?' on':''}" onclick="toggleFav(${m.id},this)" title="Избранное">★</button>
+  </div>`;
+}
+
+function renderGroups(){
+  const st=computeStandings();
+  document.getElementById('groups-container').innerHTML=
+    Object.entries(st).map(([,g])=>`
+    <div class="gcard">
+      <div class="ghead">${g.name}</div>
+      <table class="gtable">
+        <thead><tr><th>#</th><th style="text-align:left">Команда</th>
+          <th>И</th><th>В</th><th>Н</th><th>П</th><th>М</th><th>±</th><th>О</th></tr></thead>
+        <tbody>${g.teams.map((t,i)=>{
+          const pc=i===0?'p1':i===1?'p2':i===2?'p3':'';
+          const pb=i<2?`<span class="pbadge b${i+1}">${i+1}</span>`
+                    :i===2?`<span class="pbadge b3">3</span>`
+                    :`<span style="color:var(--text3);font-size:11px">4</span>`;
+          return`<tr class="${pc}">
+            <td>${pb}</td>
+            <td><div class="tcell">${flagImg(t.name,true)}<span>${t.name}</span></div></td>
+            <td>${t.mp}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+            <td>${t.gf}:${t.ga}</td>
+            <td style="color:${t.gd>0?'var(--ft)':t.gd<0?'var(--live)':'var(--text2)'}">${t.gd>0?'+':''}${t.gd}</td>
+            <td class="pts-col">${t.pts}</td></tr>`;
+        }).join('')}</tbody>
+      </table>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// СОБЫТИЯ И ИНИЦИАЛИЗАЦИЯ
+// ═══════════════════════════════════════════════════════════════
+function scrollToMatch(id){
+  const m=S.matches.find(x=>x.id===id);
+  const tab=m&&m.status==='FT'?'finished':'matches';
+  setTab(tab);
+  setTimeout(()=>{
+    const el=document.getElementById(`match-${id}`);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  },50);
+}
+function toggleFav(id,btn){
+  S.favorites.has(id)?S.favorites.delete(id):S.favorites.add(id);
+  btn.classList.toggle('on',S.favorites.has(id));saveFavs();
+}
+function setTab(tab){
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active',c.id===`tab-${tab}`));
+}
+function showToast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+document.querySelectorAll('.tbtn').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');S.filter=b.dataset.filter;renderMatches();
+}));
+document.getElementById('group-filter').addEventListener('change',e=>{S.groupFilter=e.target.value;renderMatches();});
+document.getElementById('fin-group-filter').addEventListener('change',e=>{S.finGroupFilter=e.target.value;renderFinished();});
+document.getElementById('search').addEventListener('input',e=>{S.search=e.target.value;renderMatches();renderFinished();});
+document.getElementById('refresh-btn').addEventListener('click',async()=>{
+  const btn=document.getElementById('refresh-btn');btn.classList.add('spinning');
+  await loadData();btn.classList.remove('spinning');showToast('Обновлено');
+});
+document.getElementById('theme-btn').addEventListener('click',()=>{
+  const h=document.documentElement,dark=h.dataset.theme==='dark';
+  h.dataset.theme=dark?'light':'dark';
+  document.getElementById('theme-btn').textContent=dark?'🌙':'☀️';
+  try{localStorage.setItem('wc2026_theme',h.dataset.theme);}catch(_){}
+});
+document.getElementById('share-btn').addEventListener('click',async()=>{
+  const url=window.location.href;
+  if(navigator.share){try{await navigator.share({title:'ЧМ-2026',url});return;}catch(_){}}
+  try{await navigator.clipboard.writeText(url);showToast('Ссылка скопирована!');}
+  catch(_){showToast('Отправьте этот HTML-файл напрямую');}
+});
+
+(async function init(){
+  // Тема
+  const t=(()=>{try{return localStorage.getItem('wc2026_theme');}catch(_){}return null;})();
+  if(t){document.documentElement.dataset.theme=t;document.getElementById('theme-btn').textContent=t==='dark'?'☀️':'🌙';}
+  // Избранное
+  S.favorites=loadFavs();
+  S.finGroupFilter='';
+  // Группы в фильтры
+  for(const sel of[document.getElementById('group-filter'),document.getElementById('fin-group-filter')]){
+    for(const id of Object.keys(FALLBACK_GROUPS)){
+      const o=document.createElement('option');o.value=id;o.textContent=`Группа ${id}`;sel.appendChild(o);
+    }
+  }
+  // Загрузка
+  await loadData();
+  // Автообновление — 30с если есть LIVE, иначе 60с
+  let timer=null;
+  function scheduleRefresh(){
+    clearInterval(timer);
+    const hasLive=S.matches.some(m=>m.status==='LIVE');
+    const ms=hasLive?30_000:CFG.REFRESH_MS;
+    timer=setInterval(async()=>{await loadData();scheduleRefresh();},ms);
+  }
+  scheduleRefresh();
+  setInterval(updateLastUpdate,15_000);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){clearInterval(timer);}
+    else{loadData().then(scheduleRefresh);}
+  });
+})();
+</script>
+</body>
+</html>
