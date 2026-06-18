@@ -256,17 +256,15 @@ header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
 <script>
 // ═══════════════════════════════════════════════════════════════
 // КОНФИГУРАЦИЯ
-// Для реальных данных получите БЕСПЛАТНЫЙ токен на:
-//   https://www.football-data.org/  → Dashboard → Token
-// Вставьте токен ниже. Пока токен пустой — используются
-// встроенные данные расписания ЧМ-2026 (без ошибки API).
+// Данные обновляются автоматически через GitHub Actions каждые 15 мин.
+// Токен API хранится в GitHub Secrets — в браузере не виден.
 // ═══════════════════════════════════════════════════════════════
 const CFG = {
-  API_TOKEN: '6525e6973e2a48bdb8e0466af702846d',
-  API_URL:   'https://api.football-data.org/v4/competitions/WC/matches',
-  REFRESH_MS: 60_000,
-  CACHE_KEY:  'wc2026_v2',
-  CACHE_TTL:  600_000, // 10 минут
+  DATA_URL:        './data.json',
+  LIVE_REFRESH_MS:  2 * 60_000,  // 2 мин — когда есть LIVE матчи
+  IDLE_REFRESH_MS:  5 * 60_000,  // 5 мин — в остальное время
+  CACHE_KEY:       'wc2026_v3',
+  CACHE_TTL:       300_000,      // 5 минут
 };
 
 // ═══════════════════════════════════════════════════════════════
@@ -457,7 +455,7 @@ function timeAgo(ts){
 // ═══════════════════════════════════════════════════════════════
 let S={
   matches:[],groups:{},filter:'all',groupFilter:'',finGroupFilter:'',search:'',
-  lastUpdate:null,favorites:new Set(),
+  lastUpdate:null,dataUpdatedAt:null,favorites:new Set(),
 };
 
 function saveCache(m){try{localStorage.setItem(CFG.CACHE_KEY,JSON.stringify({ts:Date.now(),m}));}catch(_){}}
@@ -469,60 +467,8 @@ function saveFavs(){try{localStorage.setItem('wc2026_favs',JSON.stringify([...S.
 function loadFavs(){try{return new Set(JSON.parse(localStorage.getItem('wc2026_favs')||'[]'));}catch(_){return new Set();}}
 
 // ═══════════════════════════════════════════════════════════════
-// ЗАГРУЗКА ДАННЫХ
+// ЗАГРУЗКА ДАННЫХ (из data.json, обновляемого GitHub Actions)
 // ═══════════════════════════════════════════════════════════════
-// Перевод английских названий команд (API) → русские (для флагов и таблиц)
-// Если API изменит название — добавьте новый вариант сюда
-const TEAM_EN_TO_RU = {
-  'Mexico':'Мексика','South Africa':'ЮАР','South Korea':'Южная Корея',
-  'Korea Republic':'Южная Корея','Czechia':'Чехия','Czech Republic':'Чехия',
-  'Canada':'Канада','Bosnia-Herzegovina':'Босния','Bosnia and Herzegovina':'Босния',
-  'Qatar':'Катар','Switzerland':'Швейцария',
-  'United States':'США','USA':'США',
-  'Paraguay':'Парагвай','Australia':'Австралия','Turkey':'Турция','Türkiye':'Турция',
-  'Brazil':'Бразилия','Morocco':'Марокко','Haiti':'Гаити','Scotland':'Шотландия',
-  'Germany':'Германия','Curaçao':'Кюрасао','Curacao':'Кюрасао',
-  'Ivory Coast':'Кот-д\'Ивуар',"Côte d'Ivoire":'Кот-д\'Ивуар',
-  'Ecuador':'Эквадор','Netherlands':'Нидерланды','Japan':'Япония',
-  'Sweden':'Швеция','Tunisia':'Тунис','Belgium':'Бельгия','Egypt':'Египет',
-  'Iran':'Иран','New Zealand':'Новая Зеландия',
-  'Spain':'Испания','Cape Verde Islands':'Кабо-Верде','Cape Verde':'Кабо-Верде',
-  'Saudi Arabia':'Саудовская Аравия','Uruguay':'Уругвай',
-  'France':'Франция','Senegal':'Сенегал','Iraq':'Ирак','Norway':'Норвегия',
-  'Argentina':'Аргентина','Algeria':'Алжир','Austria':'Австрия','Jordan':'Иордания',
-  'Colombia':'Колумбия','Portugal':'Португалия',
-  'Congo DR':'Конго','DR Congo':'Конго','Republic of Congo':'Конго',
-  'England':'Англия','Croatia':'Хорватия','Ghana':'Гана','Panama':'Панама',
-};
-function toRu(name){ return TEAM_EN_TO_RU[name] || name; }
-
-async function fetchAPI(){
-  if(!CFG.API_TOKEN) throw new Error('no-token');
-  // AbortController вместо AbortSignal.timeout — совместимо со всеми браузерами
-  const ctrl=new AbortController();
-  const tid=setTimeout(()=>ctrl.abort(),8000);
-  let r;
-  try{
-    r=await fetch(CFG.API_URL,{headers:{'X-Auth-Token':CFG.API_TOKEN},signal:ctrl.signal});
-  }finally{clearTimeout(tid);}
-  if(!r.ok) throw new Error(`HTTP ${r.status}`);
-  const j=await r.json();
-  // Фильтруем только групповой этап — у плейофф команды ещё не назначены
-  return(j.matches||[])
-    .filter(m=>m.stage==='GROUP_STAGE' && m.homeTeam?.name)
-    .map(m=>({
-      id:m.id,
-      group:(m.group||'').replace('GROUP_',''),
-      home:toRu(m.homeTeam.name),
-      away:toRu(m.awayTeam.name),
-      date:m.utcDate,
-      hs:m.score?.fullTime?.home??null,
-      as:m.score?.fullTime?.away??null,
-      status:m.status==='FINISHED'?'FT':['IN_PLAY','PAUSED'].includes(m.status)?'LIVE':'UPCOMING',
-      venue:m.venue||'',
-    }));
-}
-
 function setStatus(icon,text){
   const btn=document.getElementById('status-btn');
   const tip=document.getElementById('status-tip-text');
@@ -530,23 +476,35 @@ function setStatus(icon,text){
   if(tip) tip.textContent=text;
 }
 
+async function fetchJSON(){
+  const ctrl=new AbortController();
+  const tid=setTimeout(()=>ctrl.abort(),8000);
+  let r;
+  try{
+    // cache-bust чтобы всегда получать свежий файл
+    r=await fetch(CFG.DATA_URL+'?t='+Date.now(),{signal:ctrl.signal});
+  }finally{clearTimeout(tid);}
+  if(!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
 async function loadData(){
   try{
-    const matches=await fetchAPI();
+    const json=await fetchJSON();
+    const matches=Array.isArray(json.matches)?json.matches:[];
+    if(!matches.length) throw new Error('empty');
     S.matches=matches;
+    S.dataUpdatedAt=json.updatedAt||null;
     saveCache(matches);
     const live=matches.filter(m=>m.status==='LIVE').length;
-    setStatus('🟢', live?`Данные из API · ${live} матч${live===1?'':'а'} LIVE`:'Данные из API · обновлено только что');
+    setStatus('🟢', live
+      ?`Обновлено GitHub Actions · ${live} матч${live===1?'':'а'} LIVE`
+      :'Данные актуальны · обновляются каждые 15 мин');
   }catch(e){
-    if(e.message==='no-token'){
-      const cached=loadCache();
-      S.matches=cached||FALLBACK_MATCHES;
-      setStatus('⚪','Токен не задан — встроенное расписание');
-    } else {
-      const cached=loadCache();
-      S.matches=cached||FALLBACK_MATCHES;
-      setStatus('🔴',`Ошибка API: ${e.message} — ${cached?'кешированные данные':'встроенное расписание'}`);
-    }
+    const cached=loadCache();
+    S.matches=cached||FALLBACK_MATCHES;
+    S.dataUpdatedAt=null;
+    setStatus('🔴',`Нет данных: ${e.message} — ${cached?'кешированные':'встроенное расписание'}`);
   }
   S.lastUpdate=Date.now();
   S.groups=FALLBACK_GROUPS;
@@ -586,7 +544,13 @@ function renderAll(){updateLastUpdate();renderTodayBlock();renderMatches();rende
 
 function updateLastUpdate(){
   const el=document.getElementById('last-update');
-  el.textContent=S.lastUpdate?'Обновлено '+timeAgo(S.lastUpdate):'Нет данных';
+  if(S.dataUpdatedAt){
+    const d=new Date(S.dataUpdatedAt);
+    const t=d.toLocaleString('ru-RU',{timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit'});
+    el.textContent='Данные от '+t+' МСК';
+  } else {
+    el.textContent=S.lastUpdate?'Проверено '+timeAgo(S.lastUpdate):'Загрузка…';
+  }
 }
 
 // ── Таблица болельщиков — редактируйте список ниже ──────────
@@ -823,16 +787,16 @@ document.getElementById('share-btn').addEventListener('click',async()=>{
   }
   // Загрузка
   await loadData();
-  // Автообновление — 30с если есть LIVE, иначе 60с
+  // Автообновление data.json: 2 мин при LIVE, 5 мин иначе
   let timer=null;
   function scheduleRefresh(){
     clearInterval(timer);
     const hasLive=S.matches.some(m=>m.status==='LIVE');
-    const ms=hasLive?30_000:CFG.REFRESH_MS;
+    const ms=hasLive?CFG.LIVE_REFRESH_MS:CFG.IDLE_REFRESH_MS;
     timer=setInterval(async()=>{await loadData();scheduleRefresh();},ms);
   }
   scheduleRefresh();
-  setInterval(updateLastUpdate,15_000);
+  setInterval(updateLastUpdate,30_000);
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){clearInterval(timer);}
     else{loadData().then(scheduleRefresh);}
