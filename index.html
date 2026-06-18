@@ -137,15 +137,30 @@ header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
 .badge-ft{background:var(--ft-bg);color:var(--ft)}
 .badge-up{background:var(--up-bg);color:var(--up)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.mteams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:0 73px}
-.sblock{min-width:90px}
+.mteams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:0 60px}
+.sblock{min-width:80px}
 .team{display:flex;align-items:center;gap:9px}
 .team.away{justify-content:flex-end;gap:9px}
 .team-flag{width:39px;height:26px;border-radius:3px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
 .team-emoji{font-size:26px;line-height:1;flex-shrink:0}
 .tname{font-size:18px;font-weight:600;color:var(--text);line-height:1.2}
 .tname.winner{color:var(--primary)}
-@media(max-width:380px){.tname{font-size:12px}.team-flag{width:24px;height:16px}}
+@media(max-width:600px){
+  .mteams{padding:0 16px;gap:6px}
+  .sblock{min-width:60px}
+  .tname{font-size:14px}
+  .team-flag{width:28px;height:18px}
+  .team-emoji{font-size:20px}
+  .score{font-size:18px}
+  .mcard{padding:10px 34px 10px 10px}
+}
+@media(max-width:380px){
+  .mteams{padding:0 4px}
+  .tname{font-size:13px}
+  .team-flag{width:24px;height:16px}
+  .sblock{min-width:52px}
+  .score{font-size:16px}
+}
 .sblock{display:flex;flex-direction:column;align-items:center;gap:1px}
 .score{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.5px;white-space:nowrap}
 .score-dash{font-size:20px;font-weight:300;color:var(--text3)}
