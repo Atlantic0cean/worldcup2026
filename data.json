@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-18T19:13:04.645Z",
+  "updatedAt": "2026-06-18T21:29:33.725Z",
   "matches": [
     {
       "id": 537327,
@@ -282,9 +282,9 @@
       "home": "Швейцария",
       "away": "Босния",
       "date": "2026-06-18T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 4,
+      "as": 1,
+      "status": "FT",
       "venue": ""
     },
     {
