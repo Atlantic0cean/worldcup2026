@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-18T23:20:04.727Z",
+  "updatedAt": "2026-06-19T02:10:15.849Z",
   "matches": [
     {
       "id": 537327,
@@ -293,9 +293,9 @@
       "home": "Канада",
       "away": "Катар",
       "date": "2026-06-18T22:00:00Z",
-      "hs": 3,
+      "hs": 6,
       "as": 0,
-      "status": "LIVE",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -304,9 +304,9 @@
       "home": "Мексика",
       "away": "Южная Корея",
       "date": "2026-06-19T01:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
