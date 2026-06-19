@@ -168,6 +168,12 @@ header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
 .msk-time{font-size:12px;font-weight:600;color:var(--text2)}
 .loc-time{font-size:11px;color:var(--text3)}
 .venue{font-size:10px;color:var(--text3);text-align:center;margin-top:3px}
+.hl-btn{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);
+  border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:20px;text-decoration:none;margin-top:6px;
+  transition:all .15s;cursor:pointer}
+.hl-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+[data-theme="dark"] .hl-btn:hover{background:var(--primary)}
 .favbtn{background:none;border:none;font-size:15px;cursor:pointer;padding:0;
   opacity:.3;transition:opacity .15s,transform .1s;position:absolute;top:10px;right:10px}
 .favbtn.on{opacity:1}
@@ -276,8 +282,8 @@ header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
 // ═══════════════════════════════════════════════════════════════
 const CFG = {
   DATA_URL:        './data.json',
-  LIVE_REFRESH_MS:  2 * 60_000,  // 2 мин — когда есть LIVE матчи
-  IDLE_REFRESH_MS:  5 * 60_000,  // 5 мин — в остальное время
+  LIVE_REFRESH_MS:  60_000,       // 1 мин — когда есть LIVE матчи
+  IDLE_REFRESH_MS:  90_000,       // 90 сек — workflow обновляет каждые 2 мин
   CACHE_KEY:       'wc2026_v3',
   CACHE_TTL:       300_000,      // 5 минут
 };
@@ -482,6 +488,15 @@ function saveFavs(){try{localStorage.setItem('wc2026_favs',JSON.stringify([...S.
 function loadFavs(){try{return new Set(JSON.parse(localStorage.getItem('wc2026_favs')||'[]'));}catch(_){return new Set();}}
 
 // ═══════════════════════════════════════════════════════════════
+// HIGHLIGHTS — matchId → URL хайлайтов
+// GitHub Actions тоже может записывать highlightsUrl прямо в data.json.
+// Браузер сначала берёт URL из data.json, потом из этой карты.
+// ═══════════════════════════════════════════════════════════════
+const HIGHLIGHTS = {
+  // Пример: 537327: 'https://www.fifa.com/worldcup/matches/match/123/highlights',
+};
+
+// ═══════════════════════════════════════════════════════════════
 // ЗАГРУЗКА ДАННЫХ (из data.json, обновляемого GitHub Actions)
 // ═══════════════════════════════════════════════════════════════
 function setStatus(icon,text){
@@ -508,6 +523,13 @@ async function loadData(){
     const json=await fetchJSON();
     const matches=Array.isArray(json.matches)?json.matches:[];
     if(!matches.length) throw new Error('empty');
+    // Санация статусов: если матч LIVE но прошло >140 мин с начала — помечаем как FT
+    const now=Date.now();
+    for(const m of matches){
+      if(m.status==='LIVE'&&now-new Date(m.date).getTime()>140*60*1000) m.status='FT';
+      // Inject highlights: data.json имеет приоритет, потом статическая карта
+      if(!m.highlightsUrl&&HIGHLIGHTS[m.id]) m.highlightsUrl=HIGHLIGHTS[m.id];
+    }
     S.matches=matches;
     S.dataUpdatedAt=json.updatedAt||null;
     saveCache(matches);
@@ -624,7 +646,7 @@ function renderTodayBlock(){
       <div class="fans-scroll">
         <table class="fans-table">
           <thead><tr>
-            <th>Имя</th><th>Андердог 💙</th><th>Фаворит ❤️</th>
+            <th>Имя</th><th>Андердоги 💙</th><th>Фавориты ❤️</th>
           </tr></thead>
           <tbody>${fansRows}</tbody>
         </table>
@@ -707,6 +729,7 @@ function mc(m){
     </div>
     <div class="mtime"><span class="msk-time">${fmtTime(m.date)} МСК</span>${loc}</div>
     ${m.venue?`<div class="venue">📍 ${m.venue}</div>`:''}
+    ${m.status==='FT'&&m.highlightsUrl?`<div style="text-align:center"><a class="hl-btn" href="${m.highlightsUrl}" target="_blank" rel="noopener noreferrer">🎬 Highlights</a></div>`:''}
     <button class="favbtn${fav?' on':''}" onclick="toggleFav(${m.id},this)" title="Избранное">★</button>
   </div>`;
 }
