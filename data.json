@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-19T21:50:16.017Z",
+  "updatedAt": "2026-06-19T22:40:55.586Z",
   "matches": [
     {
       "id": 537327,
@@ -326,9 +326,9 @@
       "home": "Шотландия",
       "away": "Марокко",
       "date": "2026-06-19T22:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
