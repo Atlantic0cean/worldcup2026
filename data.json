@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-19T19:02:34.697Z",
+  "updatedAt": "2026-06-19T20:42:54.386Z",
   "matches": [
     {
       "id": 537327,
@@ -315,9 +315,9 @@
       "home": "США",
       "away": "Австралия",
       "date": "2026-06-19T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 2,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
