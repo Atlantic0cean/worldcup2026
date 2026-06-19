@@ -54,6 +54,16 @@ function get(url, headers) {
 async function main() {
   console.log('Fetching WC 2026 data…');
 
+  // Preserve existing highlightsUrl values so they survive re-fetches
+  const outPath = path.join(__dirname, '..', 'data.json');
+  const existingHighlights = {};
+  try {
+    const existing = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    for (const m of (existing.matches || [])) {
+      if (m.highlightsUrl) existingHighlights[m.id] = m.highlightsUrl;
+    }
+  } catch (_) {}
+
   const json = await get(
     'https://api.football-data.org/v4/competitions/WC/matches',
     { 'X-Auth-Token': TOKEN }
@@ -61,19 +71,25 @@ async function main() {
 
   const matches = (json.matches || [])
     .filter(m => m.stage === 'GROUP_STAGE' && m.homeTeam?.name)
-    .map(m => ({
-      id:     m.id,
-      group:  (m.group || '').replace('GROUP_', ''),
-      home:   toRu(m.homeTeam.name),
-      away:   toRu(m.awayTeam.name),
-      date:   m.utcDate,
-      hs:     m.score?.fullTime?.home  ?? null,
-      as:     m.score?.fullTime?.away  ?? null,
-      status: m.status === 'FINISHED'  ? 'FT'
-            : ['IN_PLAY', 'PAUSED'].includes(m.status) ? 'LIVE'
-            : 'UPCOMING',
-      venue:  m.venue || '',
-    }));
+    .map(m => {
+      const status = m.status === 'FINISHED'       ? 'FT'
+                   : ['IN_PLAY', 'PAUSED'].includes(m.status) ? 'LIVE'
+                   : 'UPCOMING';
+      const entry = {
+        id:     m.id,
+        group:  (m.group || '').replace('GROUP_', ''),
+        home:   toRu(m.homeTeam.name),
+        away:   toRu(m.awayTeam.name),
+        date:   m.utcDate,
+        hs:     m.score?.fullTime?.home ?? null,
+        as:     m.score?.fullTime?.away ?? null,
+        status,
+        venue:  m.venue || '',
+      };
+      const hl = m.highlightsUrl || existingHighlights[m.id];
+      if (hl) entry.highlightsUrl = hl;
+      return entry;
+    });
 
   const live     = matches.filter(m => m.status === 'LIVE').length;
   const finished = matches.filter(m => m.status === 'FT').length;
@@ -85,7 +101,6 @@ async function main() {
     matches,
   };
 
-  const outPath = path.join(__dirname, '..', 'data.json');
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2), 'utf8');
   console.log(`Saved → data.json (${matches.length} matches)`);
 }
