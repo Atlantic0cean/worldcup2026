@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-20T19:52:28.445Z",
+  "updatedAt": "2026-06-20T21:01:22.870Z",
   "matches": [
     {
       "id": 537327,
@@ -370,9 +370,9 @@
       "home": "Германия",
       "away": "Кот-д'Ивуар",
       "date": "2026-06-20T20:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
