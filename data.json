@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T21:24:24.144Z",
+  "updatedAt": "2026-06-21T22:41:12.058Z",
   "matches": [
     {
       "id": 537327,
@@ -425,9 +425,9 @@
       "home": "Уругвай",
       "away": "Кабо-Верде",
       "date": "2026-06-21T22:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
