@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T18:10:40.667Z",
+  "updatedAt": "2026-06-21T20:01:35.935Z",
   "matches": [
     {
       "id": 537327,
@@ -414,9 +414,9 @@
       "home": "Бельгия",
       "away": "Иран",
       "date": "2026-06-21T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
