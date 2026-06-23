@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-22T23:04:35.387Z",
+  "updatedAt": "2026-06-23T00:17:37.636Z",
   "matches": [
     {
       "id": 537327,
@@ -458,7 +458,7 @@
       "home": "Франция",
       "away": "Ирак",
       "date": "2026-06-22T21:00:00Z",
-      "hs": 1,
+      "hs": 2,
       "as": 0,
       "status": "LIVE",
       "venue": ""
@@ -469,9 +469,9 @@
       "home": "Норвегия",
       "away": "Сенегал",
       "date": "2026-06-23T00:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
