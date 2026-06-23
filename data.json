@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T16:30:04.813Z",
+  "updatedAt": "2026-06-23T18:23:02.997Z",
   "matches": [
     {
       "id": 537327,
@@ -491,9 +491,9 @@
       "home": "Португалия",
       "away": "Узбекистан",
       "date": "2026-06-23T17:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 3,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
