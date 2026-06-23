@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T21:58:50.403Z",
+  "updatedAt": "2026-06-23T23:11:43.797Z",
   "matches": [
     {
       "id": 537327,
@@ -504,7 +504,7 @@
       "date": "2026-06-23T20:00:00Z",
       "hs": 0,
       "as": 0,
-      "status": "UPCOMING",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -513,8 +513,8 @@
       "home": "Панама",
       "away": "Хорватия",
       "date": "2026-06-23T23:00:00Z",
-      "hs": null,
-      "as": null,
+      "hs": 0,
+      "as": 0,
       "status": "UPCOMING",
       "venue": ""
     },
