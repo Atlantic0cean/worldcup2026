@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T17:32:44.366Z",
+  "updatedAt": "2026-06-24T19:15:08.895Z",
   "matches": [
     {
       "id": 537327,
@@ -535,9 +535,9 @@
       "home": "Швейцария",
       "away": "Канада",
       "date": "2026-06-24T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -546,9 +546,9 @@
       "home": "Босния",
       "away": "Катар",
       "date": "2026-06-24T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
