@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T18:23:16.857Z",
+  "updatedAt": "2026-06-25T20:28:05.640Z",
   "matches": [
     {
       "id": 537327,
@@ -601,8 +601,8 @@
       "home": "Эквадор",
       "away": "Германия",
       "date": "2026-06-25T20:00:00Z",
-      "hs": null,
-      "as": null,
+      "hs": 1,
+      "as": 1,
       "status": "UPCOMING",
       "venue": ""
     },
@@ -612,8 +612,8 @@
       "home": "Кюрасао",
       "away": "Кот-д'Ивуар",
       "date": "2026-06-25T20:00:00Z",
-      "hs": null,
-      "as": null,
+      "hs": 0,
+      "as": 1,
       "status": "UPCOMING",
       "venue": ""
     },
