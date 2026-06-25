@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T22:04:16.516Z",
+  "updatedAt": "2026-06-25T23:40:09.926Z",
   "matches": [
     {
       "id": 537327,
@@ -623,9 +623,9 @@
       "home": "Тунис",
       "away": "Нидерланды",
       "date": "2026-06-25T23:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 2,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -634,9 +634,9 @@
       "home": "Япония",
       "away": "Швеция",
       "date": "2026-06-25T23:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
