@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T23:38:16.786Z",
+  "updatedAt": "2026-06-25T01:36:19.366Z",
   "matches": [
     {
       "id": 537327,
@@ -557,9 +557,9 @@
       "home": "Марокко",
       "away": "Гаити",
       "date": "2026-06-24T22:00:00Z",
-      "hs": 2,
+      "hs": 4,
       "as": 2,
-      "status": "LIVE",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -570,7 +570,7 @@
       "date": "2026-06-24T22:00:00Z",
       "hs": 0,
       "as": 3,
-      "status": "LIVE",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -579,9 +579,9 @@
       "home": "Чехия",
       "away": "Мексика",
       "date": "2026-06-25T01:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -590,9 +590,9 @@
       "home": "ЮАР",
       "away": "Южная Корея",
       "date": "2026-06-25T01:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
