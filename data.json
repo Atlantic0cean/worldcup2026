@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T18:13:59.818Z",
+  "updatedAt": "2026-06-26T20:11:51.531Z",
   "matches": [
     {
       "id": 537327,
@@ -667,9 +667,9 @@
       "home": "Норвегия",
       "away": "Франция",
       "date": "2026-06-26T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 3,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -678,9 +678,9 @@
       "home": "Сенегал",
       "away": "Ирак",
       "date": "2026-06-26T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
