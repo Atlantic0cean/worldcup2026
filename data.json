@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T20:58:39.243Z",
+  "updatedAt": "2026-06-27T22:06:29.244Z",
   "matches": [
     {
       "id": 537327,
@@ -733,9 +733,9 @@
       "home": "Панама",
       "away": "Англия",
       "date": "2026-06-27T21:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -744,9 +744,9 @@
       "home": "Хорватия",
       "away": "Гана",
       "date": "2026-06-27T21:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
