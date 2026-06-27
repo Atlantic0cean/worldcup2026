@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T23:49:45.430Z",
+  "updatedAt": "2026-06-27T01:47:34.588Z",
   "matches": [
     {
       "id": 537327,
@@ -689,9 +689,9 @@
       "home": "Уругвай",
       "away": "Испания",
       "date": "2026-06-27T00:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
@@ -700,9 +700,9 @@
       "home": "Кабо-Верде",
       "away": "Саудовская Аравия",
       "date": "2026-06-27T00:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
