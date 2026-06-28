@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T23:15:27.122Z",
+  "updatedAt": "2026-06-28T00:16:40.800Z",
   "matches": [
     {
       "id": 537327,
@@ -667,9 +667,9 @@
       "home": "Норвегия",
       "away": "Франция",
       "date": "2026-06-26T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 4,
+      "status": "FT",
       "venue": ""
     },
     {
@@ -678,9 +678,9 @@
       "home": "Сенегал",
       "away": "Ирак",
       "date": "2026-06-26T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 5,
+      "as": 0,
+      "status": "FT",
       "venue": ""
     },
     {
@@ -723,7 +723,7 @@
       "away": "Иран",
       "date": "2026-06-27T03:00:00Z",
       "hs": 1,
-      "as": 2,
+      "as": 1,
       "status": "FT",
       "venue": ""
     },
@@ -755,8 +755,8 @@
       "home": "Колумбия",
       "away": "Португалия",
       "date": "2026-06-27T23:30:00Z",
-      "hs": null,
-      "as": null,
+      "hs": 0,
+      "as": 0,
       "status": "UPCOMING",
       "venue": ""
     },
@@ -766,8 +766,8 @@
       "home": "Конго",
       "away": "Узбекистан",
       "date": "2026-06-27T23:30:00Z",
-      "hs": null,
-      "as": null,
+      "hs": 1,
+      "as": 1,
       "status": "UPCOMING",
       "venue": ""
     },
