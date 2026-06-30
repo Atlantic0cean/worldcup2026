@@ -1,8 +1,9 @@
 {
-  "updatedAt": "2026-06-30T21:22:16.478Z",
+  "updatedAt": "2026-06-30T21:22:48.030Z",
   "matches": [
     {
       "id": 537327,
+      "stage": "GROUP",
       "group": "A",
       "home": "Мексика",
       "away": "ЮАР",
@@ -14,6 +15,7 @@
     },
     {
       "id": 537328,
+      "stage": "GROUP",
       "group": "A",
       "home": "Южная Корея",
       "away": "Чехия",
@@ -25,6 +27,7 @@
     },
     {
       "id": 537333,
+      "stage": "GROUP",
       "group": "B",
       "home": "Канада",
       "away": "Босния",
@@ -36,6 +39,7 @@
     },
     {
       "id": 537345,
+      "stage": "GROUP",
       "group": "D",
       "home": "США",
       "away": "Парагвай",
@@ -47,6 +51,7 @@
     },
     {
       "id": 537334,
+      "stage": "GROUP",
       "group": "B",
       "home": "Катар",
       "away": "Швейцария",
@@ -58,6 +63,7 @@
     },
     {
       "id": 537339,
+      "stage": "GROUP",
       "group": "C",
       "home": "Бразилия",
       "away": "Марокко",
@@ -69,6 +75,7 @@
     },
     {
       "id": 537340,
+      "stage": "GROUP",
       "group": "C",
       "home": "Гаити",
       "away": "Шотландия",
@@ -80,6 +87,7 @@
     },
     {
       "id": 537346,
+      "stage": "GROUP",
       "group": "D",
       "home": "Австралия",
       "away": "Турция",
@@ -91,6 +99,7 @@
     },
     {
       "id": 537351,
+      "stage": "GROUP",
       "group": "E",
       "home": "Германия",
       "away": "Кюрасао",
@@ -102,6 +111,7 @@
     },
     {
       "id": 537357,
+      "stage": "GROUP",
       "group": "F",
       "home": "Нидерланды",
       "away": "Япония",
@@ -113,6 +123,7 @@
     },
     {
       "id": 537352,
+      "stage": "GROUP",
       "group": "E",
       "home": "Кот-д'Ивуар",
       "away": "Эквадор",
@@ -124,6 +135,7 @@
     },
     {
       "id": 537358,
+      "stage": "GROUP",
       "group": "F",
       "home": "Швеция",
       "away": "Тунис",
@@ -135,6 +147,7 @@
     },
     {
       "id": 537369,
+      "stage": "GROUP",
       "group": "H",
       "home": "Испания",
       "away": "Кабо-Верде",
@@ -146,6 +159,7 @@
     },
     {
       "id": 537363,
+      "stage": "GROUP",
       "group": "G",
       "home": "Бельгия",
       "away": "Египет",
@@ -157,6 +171,7 @@
     },
     {
       "id": 537370,
+      "stage": "GROUP",
       "group": "H",
       "home": "Саудовская Аравия",
       "away": "Уругвай",
@@ -168,6 +183,7 @@
     },
     {
       "id": 537364,
+      "stage": "GROUP",
       "group": "G",
       "home": "Иран",
       "away": "Новая Зеландия",
@@ -179,6 +195,7 @@
     },
     {
       "id": 537391,
+      "stage": "GROUP",
       "group": "I",
       "home": "Франция",
       "away": "Сенегал",
@@ -190,6 +207,7 @@
     },
     {
       "id": 537392,
+      "stage": "GROUP",
       "group": "I",
       "home": "Ирак",
       "away": "Норвегия",
@@ -201,6 +219,7 @@
     },
     {
       "id": 537397,
+      "stage": "GROUP",
       "group": "J",
       "home": "Аргентина",
       "away": "Алжир",
@@ -212,6 +231,7 @@
     },
     {
       "id": 537398,
+      "stage": "GROUP",
       "group": "J",
       "home": "Австрия",
       "away": "Иордания",
@@ -223,6 +243,7 @@
     },
     {
       "id": 537403,
+      "stage": "GROUP",
       "group": "K",
       "home": "Португалия",
       "away": "Конго",
@@ -234,6 +255,7 @@
     },
     {
       "id": 537409,
+      "stage": "GROUP",
       "group": "L",
       "home": "Англия",
       "away": "Хорватия",
@@ -245,6 +267,7 @@
     },
     {
       "id": 537410,
+      "stage": "GROUP",
       "group": "L",
       "home": "Гана",
       "away": "Панама",
@@ -256,6 +279,7 @@
     },
     {
       "id": 537404,
+      "stage": "GROUP",
       "group": "K",
       "home": "Узбекистан",
       "away": "Колумбия",
@@ -267,6 +291,7 @@
     },
     {
       "id": 537329,
+      "stage": "GROUP",
       "group": "A",
       "home": "Чехия",
       "away": "ЮАР",
@@ -278,6 +303,7 @@
     },
     {
       "id": 537335,
+      "stage": "GROUP",
       "group": "B",
       "home": "Швейцария",
       "away": "Босния",
@@ -289,6 +315,7 @@
     },
     {
       "id": 537336,
+      "stage": "GROUP",
       "group": "B",
       "home": "Канада",
       "away": "Катар",
@@ -300,6 +327,7 @@
     },
     {
       "id": 537330,
+      "stage": "GROUP",
       "group": "A",
       "home": "Мексика",
       "away": "Южная Корея",
@@ -311,6 +339,7 @@
     },
     {
       "id": 537348,
+      "stage": "GROUP",
       "group": "D",
       "home": "США",
       "away": "Австралия",
@@ -322,6 +351,7 @@
     },
     {
       "id": 537342,
+      "stage": "GROUP",
       "group": "C",
       "home": "Шотландия",
       "away": "Марокко",
@@ -333,6 +363,7 @@
     },
     {
       "id": 537341,
+      "stage": "GROUP",
       "group": "C",
       "home": "Бразилия",
       "away": "Гаити",
@@ -344,6 +375,7 @@
     },
     {
       "id": 537347,
+      "stage": "GROUP",
       "group": "D",
       "home": "Турция",
       "away": "Парагвай",
@@ -355,6 +387,7 @@
     },
     {
       "id": 537359,
+      "stage": "GROUP",
       "group": "F",
       "home": "Нидерланды",
       "away": "Швеция",
@@ -366,6 +399,7 @@
     },
     {
       "id": 537353,
+      "stage": "GROUP",
       "group": "E",
       "home": "Германия",
       "away": "Кот-д'Ивуар",
@@ -377,6 +411,7 @@
     },
     {
       "id": 537354,
+      "stage": "GROUP",
       "group": "E",
       "home": "Эквадор",
       "away": "Кюрасао",
@@ -388,6 +423,7 @@
     },
     {
       "id": 537360,
+      "stage": "GROUP",
       "group": "F",
       "home": "Тунис",
       "away": "Япония",
@@ -399,6 +435,7 @@
     },
     {
       "id": 537371,
+      "stage": "GROUP",
       "group": "H",
       "home": "Испания",
       "away": "Саудовская Аравия",
@@ -410,6 +447,7 @@
     },
     {
       "id": 537365,
+      "stage": "GROUP",
       "group": "G",
       "home": "Бельгия",
       "away": "Иран",
@@ -421,6 +459,7 @@
     },
     {
       "id": 537372,
+      "stage": "GROUP",
       "group": "H",
       "home": "Уругвай",
       "away": "Кабо-Верде",
@@ -432,6 +471,7 @@
     },
     {
       "id": 537366,
+      "stage": "GROUP",
       "group": "G",
       "home": "Новая Зеландия",
       "away": "Египет",
@@ -443,6 +483,7 @@
     },
     {
       "id": 537399,
+      "stage": "GROUP",
       "group": "J",
       "home": "Аргентина",
       "away": "Австрия",
@@ -454,6 +495,7 @@
     },
     {
       "id": 537393,
+      "stage": "GROUP",
       "group": "I",
       "home": "Франция",
       "away": "Ирак",
@@ -465,6 +507,7 @@
     },
     {
       "id": 537394,
+      "stage": "GROUP",
       "group": "I",
       "home": "Норвегия",
       "away": "Сенегал",
@@ -476,6 +519,7 @@
     },
     {
       "id": 537400,
+      "stage": "GROUP",
       "group": "J",
       "home": "Иордания",
       "away": "Алжир",
@@ -487,6 +531,7 @@
     },
     {
       "id": 537405,
+      "stage": "GROUP",
       "group": "K",
       "home": "Португалия",
       "away": "Узбекистан",
@@ -498,6 +543,7 @@
     },
     {
       "id": 537411,
+      "stage": "GROUP",
       "group": "L",
       "home": "Англия",
       "away": "Гана",
@@ -509,6 +555,7 @@
     },
     {
       "id": 537412,
+      "stage": "GROUP",
       "group": "L",
       "home": "Панама",
       "away": "Хорватия",
@@ -520,6 +567,7 @@
     },
     {
       "id": 537406,
+      "stage": "GROUP",
       "group": "K",
       "home": "Колумбия",
       "away": "Конго",
@@ -531,6 +579,7 @@
     },
     {
       "id": 537337,
+      "stage": "GROUP",
       "group": "B",
       "home": "Швейцария",
       "away": "Канада",
@@ -542,6 +591,7 @@
     },
     {
       "id": 537338,
+      "stage": "GROUP",
       "group": "B",
       "home": "Босния",
       "away": "Катар",
@@ -553,6 +603,7 @@
     },
     {
       "id": 537344,
+      "stage": "GROUP",
       "group": "C",
       "home": "Марокко",
       "away": "Гаити",
@@ -564,6 +615,7 @@
     },
     {
       "id": 537343,
+      "stage": "GROUP",
       "group": "C",
       "home": "Шотландия",
       "away": "Бразилия",
@@ -575,6 +627,7 @@
     },
     {
       "id": 537331,
+      "stage": "GROUP",
       "group": "A",
       "home": "Чехия",
       "away": "Мексика",
@@ -586,6 +639,7 @@
     },
     {
       "id": 537332,
+      "stage": "GROUP",
       "group": "A",
       "home": "ЮАР",
       "away": "Южная Корея",
@@ -597,6 +651,7 @@
     },
     {
       "id": 537355,
+      "stage": "GROUP",
       "group": "E",
       "home": "Эквадор",
       "away": "Германия",
@@ -608,6 +663,7 @@
     },
     {
       "id": 537356,
+      "stage": "GROUP",
       "group": "E",
       "home": "Кюрасао",
       "away": "Кот-д'Ивуар",
@@ -619,6 +675,7 @@
     },
     {
       "id": 537361,
+      "stage": "GROUP",
       "group": "F",
       "home": "Тунис",
       "away": "Нидерланды",
@@ -630,6 +687,7 @@
     },
     {
       "id": 537362,
+      "stage": "GROUP",
       "group": "F",
       "home": "Япония",
       "away": "Швеция",
@@ -641,6 +699,7 @@
     },
     {
       "id": 537349,
+      "stage": "GROUP",
       "group": "D",
       "home": "Турция",
       "away": "США",
@@ -652,6 +711,7 @@
     },
     {
       "id": 537350,
+      "stage": "GROUP",
       "group": "D",
       "home": "Парагвай",
       "away": "Австралия",
@@ -663,6 +723,7 @@
     },
     {
       "id": 537395,
+      "stage": "GROUP",
       "group": "I",
       "home": "Норвегия",
       "away": "Франция",
@@ -674,6 +735,7 @@
     },
     {
       "id": 537396,
+      "stage": "GROUP",
       "group": "I",
       "home": "Сенегал",
       "away": "Ирак",
@@ -685,6 +747,7 @@
     },
     {
       "id": 537373,
+      "stage": "GROUP",
       "group": "H",
       "home": "Уругвай",
       "away": "Испания",
@@ -696,6 +759,7 @@
     },
     {
       "id": 537374,
+      "stage": "GROUP",
       "group": "H",
       "home": "Кабо-Верде",
       "away": "Саудовская Аравия",
@@ -707,6 +771,7 @@
     },
     {
       "id": 537367,
+      "stage": "GROUP",
       "group": "G",
       "home": "Новая Зеландия",
       "away": "Бельгия",
@@ -718,6 +783,7 @@
     },
     {
       "id": 537368,
+      "stage": "GROUP",
       "group": "G",
       "home": "Египет",
       "away": "Иран",
@@ -729,6 +795,7 @@
     },
     {
       "id": 537413,
+      "stage": "GROUP",
       "group": "L",
       "home": "Панама",
       "away": "Англия",
@@ -740,6 +807,7 @@
     },
     {
       "id": 537414,
+      "stage": "GROUP",
       "group": "L",
       "home": "Хорватия",
       "away": "Гана",
@@ -751,6 +819,7 @@
     },
     {
       "id": 537407,
+      "stage": "GROUP",
       "group": "K",
       "home": "Колумбия",
       "away": "Португалия",
@@ -762,6 +831,7 @@
     },
     {
       "id": 537408,
+      "stage": "GROUP",
       "group": "K",
       "home": "Конго",
       "away": "Узбекистан",
@@ -773,6 +843,7 @@
     },
     {
       "id": 537401,
+      "stage": "GROUP",
       "group": "J",
       "home": "Иордания",
       "away": "Аргентина",
@@ -784,6 +855,7 @@
     },
     {
       "id": 537402,
+      "stage": "GROUP",
       "group": "J",
       "home": "Алжир",
       "away": "Австрия",
@@ -791,6 +863,390 @@
       "hs": 3,
       "as": 3,
       "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537417,
+      "stage": "R32",
+      "group": "",
+      "home": "ЮАР",
+      "away": "Канада",
+      "date": "2026-06-28T19:00:00Z",
+      "hs": 0,
+      "as": 1,
+      "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537423,
+      "stage": "R32",
+      "group": "",
+      "home": "Бразилия",
+      "away": "Япония",
+      "date": "2026-06-29T17:00:00Z",
+      "hs": 2,
+      "as": 1,
+      "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537415,
+      "stage": "R32",
+      "group": "",
+      "home": "Германия",
+      "away": "Парагвай",
+      "date": "2026-06-29T20:30:00Z",
+      "hs": 4,
+      "as": 5,
+      "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537418,
+      "stage": "R32",
+      "group": "",
+      "home": "Нидерланды",
+      "away": "Марокко",
+      "date": "2026-06-30T01:00:00Z",
+      "hs": 3,
+      "as": 4,
+      "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537424,
+      "stage": "R32",
+      "group": "",
+      "home": "Кот-д'Ивуар",
+      "away": "Норвегия",
+      "date": "2026-06-30T17:00:00Z",
+      "hs": 1,
+      "as": 2,
+      "status": "FT",
+      "venue": ""
+    },
+    {
+      "id": 537416,
+      "stage": "R32",
+      "group": "",
+      "home": "Франция",
+      "away": "Швеция",
+      "date": "2026-06-30T21:00:00Z",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
+      "venue": ""
+    },
+    {
+      "id": 537425,
+      "stage": "R32",
+      "group": "",
+      "home": "Мексика",
+      "away": "Эквадор",
+      "date": "2026-07-01T01:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537426,
+      "stage": "R32",
+      "group": "",
+      "home": "Англия",
+      "away": "Конго",
+      "date": "2026-07-01T16:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537422,
+      "stage": "R32",
+      "group": "",
+      "home": "Бельгия",
+      "away": "Сенегал",
+      "date": "2026-07-01T20:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537421,
+      "stage": "R32",
+      "group": "",
+      "home": "США",
+      "away": "Босния",
+      "date": "2026-07-02T00:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537420,
+      "stage": "R32",
+      "group": "",
+      "home": "Испания",
+      "away": "Австрия",
+      "date": "2026-07-02T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537419,
+      "stage": "R32",
+      "group": "",
+      "home": "Португалия",
+      "away": "Хорватия",
+      "date": "2026-07-02T23:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537429,
+      "stage": "R32",
+      "group": "",
+      "home": "Швейцария",
+      "away": "Алжир",
+      "date": "2026-07-03T03:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537428,
+      "stage": "R32",
+      "group": "",
+      "home": "Австралия",
+      "away": "Египет",
+      "date": "2026-07-03T18:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537427,
+      "stage": "R32",
+      "group": "",
+      "home": "Аргентина",
+      "away": "Кабо-Верде",
+      "date": "2026-07-03T22:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537430,
+      "stage": "R32",
+      "group": "",
+      "home": "Колумбия",
+      "away": "Гана",
+      "date": "2026-07-04T01:30:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537376,
+      "stage": "R16",
+      "group": "",
+      "home": "Канада",
+      "away": "Марокко",
+      "date": "2026-07-04T17:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537375,
+      "stage": "R16",
+      "group": "",
+      "home": "Парагвай",
+      "away": null,
+      "date": "2026-07-04T21:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537377,
+      "stage": "R16",
+      "group": "",
+      "home": "Бразилия",
+      "away": null,
+      "date": "2026-07-05T20:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537378,
+      "stage": "R16",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-06T00:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537379,
+      "stage": "R16",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-06T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537380,
+      "stage": "R16",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-07T00:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537381,
+      "stage": "R16",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-07T16:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537382,
+      "stage": "R16",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-07T20:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537383,
+      "stage": "QF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-09T20:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537384,
+      "stage": "QF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-10T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537385,
+      "stage": "QF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-11T21:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537386,
+      "stage": "QF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-12T01:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537387,
+      "stage": "SF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-14T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537388,
+      "stage": "SF",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-15T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537389,
+      "stage": "3RD",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-18T21:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
+      "venue": ""
+    },
+    {
+      "id": 537390,
+      "stage": "FINAL",
+      "group": "",
+      "home": null,
+      "away": null,
+      "date": "2026-07-19T19:00:00Z",
+      "hs": null,
+      "as": null,
+      "status": "UPCOMING",
       "venue": ""
     }
   ]
