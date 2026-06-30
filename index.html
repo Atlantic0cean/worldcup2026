@@ -719,7 +719,9 @@ function renderPlayoff(){
 
   const byStage={};
   for(const m of ms){(byStage[m.stage]??=[]).push(m);}
-  for(const arr of Object.values(byStage)) arr.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  // Сортировка по id (а не по дате!) — id матчей идёт в порядке официальной сетки
+  // FIFA: пары соседних id в раунде сходятся в один матч следующего раунда.
+  for(const arr of Object.values(byStage)) arr.sort((a,b)=>a.id-b.id);
 
   const cols=STAGE_ORDER.map(s=>{
     const list=byStage[s];
