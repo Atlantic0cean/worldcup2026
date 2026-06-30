@@ -69,17 +69,31 @@ async function main() {
     { 'X-Auth-Token': TOKEN }
   );
 
+  // football-data.org stage codes → short internal stage ids
+  const STAGE_MAP = {
+    GROUP_STAGE:    'GROUP',
+    LAST_32:        'R32',
+    ROUND_OF_32:    'R32',
+    LAST_16:        'R16',
+    ROUND_OF_16:    'R16',
+    QUARTER_FINALS: 'QF',
+    SEMI_FINALS:    'SF',
+    THIRD_PLACE:    '3RD',
+    FINAL:          'FINAL',
+  };
+
   const matches = (json.matches || [])
-    .filter(m => m.stage === 'GROUP_STAGE' && m.homeTeam?.name)
+    .filter(m => STAGE_MAP[m.stage])
     .map(m => {
       const status = m.status === 'FINISHED'       ? 'FT'
                    : ['IN_PLAY', 'PAUSED'].includes(m.status) ? 'LIVE'
                    : 'UPCOMING';
       const entry = {
         id:     m.id,
+        stage:  STAGE_MAP[m.stage],
         group:  (m.group || '').replace('GROUP_', ''),
-        home:   toRu(m.homeTeam.name),
-        away:   toRu(m.awayTeam.name),
+        home:   m.homeTeam?.name ? toRu(m.homeTeam.name) : null,
+        away:   m.awayTeam?.name ? toRu(m.awayTeam.name) : null,
         date:   m.utcDate,
         hs:     m.score?.fullTime?.home ?? null,
         as:     m.score?.fullTime?.away ?? null,
@@ -94,7 +108,8 @@ async function main() {
   const live     = matches.filter(m => m.status === 'LIVE').length;
   const finished = matches.filter(m => m.status === 'FT').length;
   const upcoming = matches.filter(m => m.status === 'UPCOMING').length;
-  console.log(`  ${matches.length} matches: ${live} LIVE, ${finished} FT, ${upcoming} upcoming`);
+  const playoff  = matches.filter(m => m.stage !== 'GROUP').length;
+  console.log(`  ${matches.length} matches: ${live} LIVE, ${finished} FT, ${upcoming} upcoming (${playoff} playoff)`);
 
   const out = {
     updatedAt: new Date().toISOString(),
