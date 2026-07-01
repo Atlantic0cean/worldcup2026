@@ -718,6 +718,36 @@ function poMatchCard(m){
   </div>`;
 }
 
+function matchWinner(m){
+  if(m.status!=='FT') return null;
+  if(m.pHs!=null&&m.pAs!=null) return m.pHs>m.pAs?m.home:m.pAs>m.pHs?m.away:null;
+  if(m.hs===null) return null;
+  return m.hs>m.as?m.home:m.as>m.hs?m.away:null;
+}
+function findFeeder(list,teamName,used){
+  if(!teamName) return null;
+  for(const m of list){
+    if(used.has(m.id)) continue;
+    if(matchWinner(m)===teamName) return m;
+  }
+  return null;
+}
+// Строим порядок раунда по факту "кто из кого пришёл", а не по id/дате —
+// реальная сетка FIFA не следует последовательной нумерации матчей.
+function orderRound(list,nextOrdered){
+  if(!nextOrdered) return[...list].sort((a,b)=>a.id-b.id);
+  const used=new Set();
+  const ordered=[];
+  for(const nm of nextOrdered){
+    const left=findFeeder(list,nm.home,used);
+    if(left){ordered.push(left);used.add(left.id);}
+    const right=findFeeder(list,nm.away,used);
+    if(right){ordered.push(right);used.add(right.id);}
+  }
+  for(const m of list) if(!used.has(m.id)) ordered.push(m);
+  return ordered;
+}
+
 function renderPlayoff(){
   const el=document.getElementById('playoff-block');
   const ms=S.matches.filter(m=>m.stage&&m.stage!=='GROUP');
@@ -725,9 +755,17 @@ function renderPlayoff(){
 
   const byStage={};
   for(const m of ms){(byStage[m.stage]??=[]).push(m);}
-  // Сортировка по id (а не по дате!) — id матчей идёт в порядке официальной сетки
-  // FIFA: пары соседних id в раунде сходятся в один матч следующего раунда.
-  for(const arr of Object.values(byStage)) arr.sort((a,b)=>a.id-b.id);
+  // Строим порядок задом наперёд: от финала к 1/16, сопоставляя победителей
+  // с матчем следующего раунда — так пары всегда встают под "свой" матч,
+  // независимо от того, как API нумерует id или даты.
+  let nextOrdered=null;
+  for(let i=STAGE_ORDER.length-1;i>=0;i--){
+    const s=STAGE_ORDER[i];
+    const list=byStage[s];
+    if(!list){nextOrdered=null;continue;}
+    byStage[s]=orderRound(list,nextOrdered);
+    nextOrdered=byStage[s];
+  }
 
   const cols=STAGE_ORDER.map(s=>{
     const list=byStage[s];
