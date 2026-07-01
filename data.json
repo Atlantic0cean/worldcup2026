@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T18:23:25.530Z",
+  "updatedAt": "2026-07-01T20:21:05.182Z",
   "matches": [
     {
       "id": 537327,
@@ -972,9 +972,9 @@
       "home": "Бельгия",
       "away": "Сенегал",
       "date": "2026-07-01T20:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
