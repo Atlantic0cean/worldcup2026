@@ -96,6 +96,8 @@ header{background:var(--primary);color:#fff;position:sticky;top:0;z-index:100;
 .po-flag-e{font-size:13px;line-height:1;flex-shrink:0}
 .po-tname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .po-tscore{font-weight:800;font-size:12px;min-width:14px;text-align:right;color:var(--text)}
+.po-pens-row{text-align:right;margin-top:1px}
+.po-pens{font-size:9px;color:var(--text3)}
 .po-third{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);max-width:148px}
 @media(max-width:480px){.po-round-col{width:128px}.po-bracket{gap:16px}
   .po-round-col:not(:first-child) .po-match-wrap::before{left:-16px;width:16px}}
@@ -698,8 +700,11 @@ function poMatchCard(m){
   const fH=flagUrl(m.home),fA=flagUrl(m.away);
   const imgH=fH?`<img class="po-flag" src="${fH}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<span class="po-flag-e">${flagEmoji(m.home)}</span>`;
   const imgA=fA?`<img class="po-flag" src="${fA}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<span class="po-flag-e">${flagEmoji(m.away)}</span>`;
-  const wH=m.status==='FT'&&m.hs>m.as?'win':'';
-  const wA=m.status==='FT'&&m.as>m.hs?'win':'';
+  const hasPens=m.pHs!=null&&m.pAs!=null;
+  // Победитель: если основное время — ничья, решают пенальти
+  const wH=m.status==='FT'&&(hasPens?m.pHs>m.pAs:m.hs>m.as)?'win':'';
+  const wA=m.status==='FT'&&(hasPens?m.pAs>m.pHs:m.as>m.hs)?'win':'';
+  const pens=hasPens?`<span class="po-pens">(${m.pHs}:${m.pAs} пен.)</span>`:'';
   const scH=m.hs!==null?m.hs:'';
   const scA=m.as!==null?m.as:'';
   const dateLabel=m.status==='LIVE'
@@ -709,6 +714,7 @@ function poMatchCard(m){
     <div class="po-date">${dateLabel}</div>
     <div class="po-team ${wH}">${imgH}<span class="po-tname">${teamName(m.home)}</span><span class="po-tscore">${scH}</span></div>
     <div class="po-team ${wA}">${imgA}<span class="po-tname">${teamName(m.away)}</span><span class="po-tscore">${scA}</span></div>
+    ${pens?`<div class="po-pens-row">${pens}</div>`:''}
   </div>`;
 }
 
