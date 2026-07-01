@@ -100,6 +100,11 @@ async function main() {
         status,
         venue:  m.venue || '',
       };
+      // Плей-офф: серия пенальти после ничьей (только у knockout-стадий)
+      if (m.score?.duration === 'PENALTY_SHOOTOUT' && m.score?.penalties) {
+        entry.pHs = m.score.penalties.home ?? null;
+        entry.pAs = m.score.penalties.away ?? null;
+      }
       const hl = m.highlightsUrl || existingHighlights[m.id];
       if (hl) entry.highlightsUrl = hl;
       return entry;
