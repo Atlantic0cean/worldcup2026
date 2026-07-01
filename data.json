@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T00:16:29.684Z",
+  "updatedAt": "2026-07-01T04:56:26.234Z",
   "matches": [
     {
       "id": 537327,
@@ -944,9 +944,9 @@
       "home": "Мексика",
       "away": "Эквадор",
       "date": "2026-07-01T01:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 2,
+      "as": 0,
+      "status": "FT",
       "venue": ""
     },
     {
