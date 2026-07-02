@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T22:03:26.213Z",
+  "updatedAt": "2026-07-02T23:18:45.445Z",
   "matches": [
     {
       "id": 537327,
@@ -1008,9 +1008,9 @@
       "home": "Португалия",
       "away": "Хорватия",
       "date": "2026-07-02T23:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
