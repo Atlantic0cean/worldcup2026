@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T01:06:11.759Z",
+  "updatedAt": "2026-07-03T04:54:07.532Z",
   "matches": [
     {
       "id": 537327,
@@ -1010,7 +1010,7 @@
       "date": "2026-07-02T23:00:00Z",
       "hs": 2,
       "as": 1,
-      "status": "LIVE",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -1020,9 +1020,9 @@
       "home": "Швейцария",
       "away": "Алжир",
       "date": "2026-07-03T03:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 2,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
