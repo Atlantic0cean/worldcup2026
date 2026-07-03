@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T17:52:17.375Z",
+  "updatedAt": "2026-07-03T18:56:29.888Z",
   "matches": [
     {
       "id": 537327,
@@ -1032,9 +1032,9 @@
       "home": "Австралия",
       "away": "Египет",
       "date": "2026-07-03T18:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
