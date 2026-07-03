@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T21:32:44.555Z",
+  "updatedAt": "2026-07-03T22:37:35.522Z",
   "matches": [
     {
       "id": 537327,
@@ -1046,9 +1046,9 @@
       "home": "Аргентина",
       "away": "Кабо-Верде",
       "date": "2026-07-03T22:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
