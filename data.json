@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T16:28:21.521Z",
+  "updatedAt": "2026-07-04T17:35:18.068Z",
   "matches": [
     {
       "id": 537327,
@@ -1070,9 +1070,9 @@
       "home": "Канада",
       "away": "Марокко",
       "date": "2026-07-04T17:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
