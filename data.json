@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T04:54:10.698Z",
+  "updatedAt": "2026-07-04T07:38:38.665Z",
   "matches": [
     {
       "id": 537327,
@@ -1036,7 +1036,7 @@
       "as": 5,
       "status": "FT",
       "venue": "",
-      "pHs": 4,
+      "pHs": 2,
       "pAs": 4
     },
     {
@@ -1115,8 +1115,8 @@
       "id": 537379,
       "stage": "R16",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Португалия",
+      "away": "Испания",
       "date": "2026-07-06T19:00:00Z",
       "hs": null,
       "as": null,
@@ -1139,8 +1139,8 @@
       "id": 537381,
       "stage": "R16",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Аргентина",
+      "away": "Египет",
       "date": "2026-07-07T16:00:00Z",
       "hs": null,
       "as": null,
@@ -1151,8 +1151,8 @@
       "id": 537382,
       "stage": "R16",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Швейцария",
+      "away": "Колумбия",
       "date": "2026-07-07T20:00:00Z",
       "hs": null,
       "as": null,
