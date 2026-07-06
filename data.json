@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-05T23:17:38.483Z",
+  "updatedAt": "2026-07-06T01:11:14.681Z",
   "matches": [
     {
       "id": 537327,
@@ -1105,10 +1105,10 @@
       "group": "",
       "home": "Мексика",
       "away": "Англия",
-      "date": "2026-07-06T00:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "date": "2026-07-06T01:00:00Z",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
