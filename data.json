@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-06T05:36:08.977Z",
+  "updatedAt": "2026-07-06T09:39:24.042Z",
   "matches": [
     {
       "id": 537327,
@@ -1187,8 +1187,8 @@
       "id": 537385,
       "stage": "QF",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Норвегия",
+      "away": "Англия",
       "date": "2026-07-11T21:00:00Z",
       "hs": null,
       "as": null,
