@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T16:01:14.709Z",
+  "updatedAt": "2026-07-07T18:09:14.341Z",
   "matches": [
     {
       "id": 537327,
@@ -1142,9 +1142,9 @@
       "home": "Аргентина",
       "away": "Египет",
       "date": "2026-07-07T16:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 3,
+      "as": 2,
+      "status": "LIVE",
       "venue": ""
     },
     {
