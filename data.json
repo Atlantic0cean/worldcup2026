@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-08T04:29:26.347Z",
+  "updatedAt": "2026-07-08T07:05:04.105Z",
   "matches": [
     {
       "id": 537327,
@@ -1158,7 +1158,7 @@
       "as": 3,
       "status": "FT",
       "venue": "",
-      "pHs": 3,
+      "pHs": 4,
       "pAs": 3
     },
     {
@@ -1201,8 +1201,8 @@
       "id": 537386,
       "stage": "QF",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Аргентина",
+      "away": "Швейцария",
       "date": "2026-07-12T01:00:00Z",
       "hs": null,
       "as": null,
