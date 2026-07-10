@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-10T18:53:42.711Z",
+  "updatedAt": "2026-07-10T20:14:27.455Z",
   "matches": [
     {
       "id": 537327,
@@ -1180,9 +1180,9 @@
       "home": "Испания",
       "away": "Бельгия",
       "date": "2026-07-10T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 1,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
