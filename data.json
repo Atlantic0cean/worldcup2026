@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T03:52:20.896Z",
+  "updatedAt": "2026-07-12T06:23:54.419Z",
   "matches": [
     {
       "id": 537327,
@@ -1108,7 +1108,7 @@
       "date": "2026-07-06T01:00:00Z",
       "hs": 2,
       "as": 3,
-      "status": "UPCOMING",
+      "status": "FT",
       "venue": ""
     },
     {
@@ -1225,8 +1225,8 @@
       "id": 537388,
       "stage": "SF",
       "group": "",
-      "home": null,
-      "away": null,
+      "home": "Англия",
+      "away": "Аргентина",
       "date": "2026-07-15T19:00:00Z",
       "hs": null,
       "as": null,
