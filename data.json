@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T00:07:48.531Z",
+  "updatedAt": "2026-07-12T03:52:20.896Z",
   "matches": [
     {
       "id": 537327,
@@ -1204,9 +1204,9 @@
       "home": "Аргентина",
       "away": "Швейцария",
       "date": "2026-07-12T01:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 3,
+      "as": 1,
+      "status": "FT",
       "venue": ""
     },
     {
