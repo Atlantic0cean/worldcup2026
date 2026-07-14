@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T18:17:15.124Z",
+  "updatedAt": "2026-07-14T19:47:25.321Z",
   "matches": [
     {
       "id": 537327,
@@ -1216,9 +1216,9 @@
       "home": "Франция",
       "away": "Испания",
       "date": "2026-07-14T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 1,
+      "status": "LIVE",
       "venue": ""
     },
     {
