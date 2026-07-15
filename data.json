@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T19:05:48.631Z",
+  "updatedAt": "2026-07-15T20:17:10.329Z",
   "matches": [
     {
       "id": 537327,
@@ -1228,9 +1228,9 @@
       "home": "Англия",
       "away": "Аргентина",
       "date": "2026-07-15T19:00:00Z",
-      "hs": null,
-      "as": null,
-      "status": "UPCOMING",
+      "hs": 0,
+      "as": 0,
+      "status": "LIVE",
       "venue": ""
     },
     {
