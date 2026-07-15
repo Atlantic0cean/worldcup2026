@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T06:07:32.026Z",
+  "updatedAt": "2026-07-15T08:33:02.562Z",
   "matches": [
     {
       "id": 537327,
@@ -1237,7 +1237,7 @@
       "id": 537389,
       "stage": "3RD",
       "group": "",
-      "home": null,
+      "home": "Франция",
       "away": null,
       "date": "2026-07-18T21:00:00Z",
       "hs": null,
@@ -1249,7 +1249,7 @@
       "id": 537390,
       "stage": "FINAL",
       "group": "",
-      "home": null,
+      "home": "Испания",
       "away": null,
       "date": "2026-07-19T19:00:00Z",
       "hs": null,
